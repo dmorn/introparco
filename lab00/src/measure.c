@@ -1,8 +1,8 @@
 #include <time.h>
 #include "measure.h"
 
-const duration ns = 1000000000;
-const duration ms = ns/1000;
+duration ns = 1000000000;
+duration ms = ns/1000;
 
 int
 now(struct timespec *t) {

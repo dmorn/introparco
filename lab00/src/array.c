@@ -48,7 +48,7 @@ main(int argc, char *argv[]) {
 	}
 
 	fprintf(stderr, "n=%d\n", n);
-	fprintf(stderr, "elapsed=%.3fms\n", ms(elapsed));
+	fprintf(stderr, "elapsed=%.3fms\n", (double)elapsed/ms);
 
 	free(a);
 	free(b);

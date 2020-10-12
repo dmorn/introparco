@@ -1,9 +1,7 @@
 #include <time.h>
+#include <stdlib.h>
 
-typedef long duration;
-
-extern duration ns;
-extern duration ms;
-
-int now(struct timespec *t);
-duration sub(struct timespec *tic);
+/* time interval since epoch in nanoseconds.
+ * Exits if an error is encountered, hence it
+ * just suitable for benchmarking. */
+long now_ns();

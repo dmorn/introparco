@@ -11,9 +11,8 @@ usage(char* name) {
 
 int
 main(int argc, char *argv[]) {
-	int err;
-	struct timespec t;
-	duration elapsed;
+	long tic, toc;
+	double elapsed;
 	int *a, *b, *c;
 
 	if (argc != 2) {
@@ -30,25 +29,20 @@ main(int argc, char *argv[]) {
 	b = malloc(sizeof(int)*n);
 	c = malloc(sizeof(int)*n);
 
-	if ((err = now(&t))) {
-		perror("now");
-		return err;
-	}
+	tic = now_ns();
 	for (int i = 0; i < n; i++) {
 		a[i] = rand() % INT_MAX/2;
 		b[i] = rand() % INT_MAX/2;
 		c[i] = a[i] + b[i];
 	}
-	if ((elapsed = sub(&t)) < 0) {
-		perror("sub");
-		return elapsed;
-	}
+	toc = now_ns();
 	for (int i = 0; i < n; i++) {
-		fprintf(stdout, "%d\n", c[i]);
+		fprintf(stdout, "%d,%d,%d\n", a[i], b[i], c[i]);
 	}
 
 	fprintf(stderr, "n=%d\n", n);
-	fprintf(stderr, "elapsed=%.3fms\n", (double)elapsed/ms);
+	elapsed = (double)(toc - tic)/1e6;
+	fprintf(stderr, "elapsed=%.3fms\n", elapsed);
 
 	free(a);
 	free(b);

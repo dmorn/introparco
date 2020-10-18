@@ -1,15 +1,22 @@
-SRC = src
 USER = dmorandini
 HOST = slurm-ctrl.inf.unibz.it
 ADDR = $(USER)@$(HOST)
-REV = $(sh git rev-parse --short)
-RELNAME = release-$(REV)
-RELARCHIVE = $(RELNAME).tar.gz
 
-release : $(RELARCHIVE)
-$(RELARCHVE) : $(SRC)/*.c $(SRC)/makefile
-	tar -xc $^ > $@
+SRC = src
 
-deploy : $(RELARCHIVE)
-	ssh $(ADDR) mkdir $(RELDIR)
-	scp $^ $(ADDR):$(RELDIR)/
+REV = $(shell git rev-parse --short HEAD)
+export RELNAME = release-$(REV)
+export RELARCHIVE = $(RELNAME).tar.gz
+export CMD = benchmark
+
+HOSTDIST = dist-$(shell basename $(PWD))
+HOSTREL = $(HOSTDIST)/$(RELNAME)
+
+.PHONY : deploy
+
+deploy :
+	cd $(SRC) && $(MAKE) release
+	ssh $(ADDR) "rm -r $(HOSTREL); mkdir -p $(HOSTREL)"
+	scp $(SRC)/$(RELARCHIVE) $(ADDR):.
+	ssh $(ADDR) "tar -zxf $(RELARCHIVE) -C $(HOSTREL); rm $(RELARCHIVE)"
+	ssh $(ADDR) "cd $(HOSTREL); make && mv $(CMD) ../.."

@@ -1,17 +1,29 @@
-CMD = benchmark
-BUILDDIR = build
-BINDIR = /usr/local/bin
 CFLAGS = -Wall -Wextra
 LDFLAGS =
 CC = cc
 
+CMD ?= benchmark
+BUILDDIR = build
+BINDIR = /usr/local/bin
+
+RELNAME ?= release
+RELARCHIVE ?= $(RELNAME).tar.gz
+
+.PHONY : deploy all install clean release
+
 all : $(CMD)
 install : $(CMD)
 	mv $(CMD) $(BINDIR)
-clean:
-	rm *.o
-	rm $(CMD)
+uninstall :
 	rm $(BINDIR)/$(CMD)
+clean :
+	rm *.o
+	rm *.tar.gz
+	rm $(CMD)
+
+release : $(RELARCHIVE)
+$(RELARCHIVE) : *.c *.h makefile
+	tar -zc $^ > $@
 
 sumprefix.o : sumprefix.c sumprefix.h
 	$(CC) -c $(CFLAGS) sumprefix.c

@@ -28,11 +28,11 @@ typedef struct {
 } Measurement;
 
 void
-putsm(int fd, Measurement m, char *prefix) {
+putm(int fd, Measurement m, char *prefix) {
 	dprintf(fd, "%s,%d,%lu,%lu,%lu\n", prefix, m.n, m.alloc, m.free, m.exec);
 }
 
-void 
+void
 randsumExp(int n, Measurement* m) {
 	long tic;
 	int *a, *b, *c;
@@ -42,7 +42,7 @@ randsumExp(int n, Measurement* m) {
 	b = malloc(sizeof(int)*n);
 	c = malloc(sizeof(int)*n);
 	m->alloc = now() - tic;
-	
+
 	tic = now();
 	randsum(n, a, b, c);
 	m->exec = now() - tic;
@@ -85,27 +85,29 @@ enum {
 	Sumprefix
 };
 
+/* Exp function signature is shared across sumprefixExp and
+ * randsumExp functions. */
 typedef void(*Exp)(int n, Measurement *m);
-
-Exp exptbl[] = {
-	[Randsum] = &randsumExp,
-	[Sumprefix] = &sumprefixExp
-};
 
 int
 usage(char *prog) {
-	fprintf(stderr, "usage: %s <flags> (at least one algorithm has to be specified)\n", prog);
-	fprintf(stderr, "-r execute random sum algorithm\n");
-	fprintf(stderr, "-p execute sum prefix algorithm\n");
-	fprintf(stderr, "-d turn on algorithmic specific debug prints\n");
-	fprintf(stderr, "-n: specify size of the array handled (defaults to 100)\n");
+	fprintf(stderr, "\n"
+			"usage: %s <flags> <N>\n"
+			"note: at least one algo has to be specified\n"
+			"\n", prog);
+
+	fprintf(stderr, "N: list of array sizes. Each n will be a separate measurement\n"
+			"-r execute random sum algorithm\n"
+			"-p execute sum prefix algorithm\n"
+			"-d turn on algorithmic specific debug prints\n");
 	return 1;
 }
 
 int
 main(int argc, char *argv[]) {
 	unsigned int opt = 0;
-	int n = 100, c, todo = 0;
+	int c = 0, todoc = 0, todo = 0;
+	int *todov;
 	Measurement *m;
 	debugfd = open("/dev/null", O_WRONLY);
 
@@ -113,37 +115,52 @@ main(int argc, char *argv[]) {
 		switch (c) {
 			case 'r':
 				opt |= Randsum;
-				todo++;
 				break;
 			case 'p':
 				opt |= Sumprefix;
-				todo++;
 				break;
 			case 'd':
 				debugfd = 2;
-				break;
-			case 'n':
-				n = atoi(optarg);
-				if(n < 0) {
-					return usage(argv[0]);
-				}
 				break;
 			default:
 				return usage(argv[0]);
 		}
 	}
-	if(!opt)
+	if(!opt) {
+		fprintf(stderr, "error: no algorithm was specified\n");
 		return usage(argv[0]);
+	}
+
+	todoc = argc - optind;
+	if(todoc <= 0) {
+		fprintf(stderr, "error: at least one N has to be specified\n");
+		return usage(argv[0]);
+	}
+
+	todov = malloc(sizeof(int)*todoc);
+	for(int i = 0; i < todoc; i++) {
+		todo = atoi(argv[i+optind]);
+		if(todo < 0) {
+			fprintf(stderr, "error: invalid N at position %d: %s\n", i, argv[i]);
+			return usage(argv[0]);
+		}
+		todov[i] = todo;
+	}
 
 	m = malloc(sizeof(Measurement));
-	m->n = n;
-	if(opt & Randsum) {
-		randsumExp(n, m);
-		putsm(1, *m, "randsum");
+	for(int i = 0; i < todoc; i++) {
+		todo = todov[i];
+		m->n = todo;
+		if(opt & Randsum) {
+			randsumExp(todo, m);
+			putm(1, *m, "randsum");
+		}
+		if(opt & Sumprefix) {
+			sumprefixExp(todo, m);
+			putm(1, *m, "sumprefix");
+		}
 	}
-	if(opt & Sumprefix) {
-		sumprefixExp(n, m);
-		putsm(1, *m, "sumprefix");
-	}
+
+	free(todov);
 	free(m);
 }

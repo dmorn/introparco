@@ -82,7 +82,7 @@ sumprefixExp(int n, Measurement *m) {
 
 enum {
 	Randsum = 1,
-	Sumprefix
+	Sumprefix,
 };
 
 /* Exp function signature is shared across sumprefixExp and
@@ -128,6 +128,9 @@ main(int argc, char *argv[]) {
 				algoids[Randsum] = optarg;
 				break;
 			case 'p':
+				opt |= Sumprefix;
+				break;
+			case 'P':
 				opt |= Sumprefix;
 				algoids[Sumprefix] = optarg;
 				break;

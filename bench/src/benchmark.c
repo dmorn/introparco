@@ -89,6 +89,11 @@ enum {
  * randsumExp functions. */
 typedef void(*Exp)(int n, Measurement *m);
 
+char *algoids[] = {
+	[Randsum] = "randsum",
+	[Sumprefix] = "sumprefix"
+};
+
 int
 usage(char *prog) {
 	fprintf(stderr, "\n"
@@ -98,7 +103,9 @@ usage(char *prog) {
 
 	fprintf(stderr, "N: list of array sizes. Each n will be a separate measurement\n"
 			"-r execute random sum algorithm\n"
+			"-R: same as -r, but changes algo identifier\n"
 			"-p execute sum prefix algorithm\n"
+			"-P: same as -R with -p\n"
 			"-d turn on algorithmic specific debug prints\n");
 	return 1;
 }
@@ -111,13 +118,18 @@ main(int argc, char *argv[]) {
 	Measurement *m;
 	debugfd = open("/dev/null", O_WRONLY);
 
-	while((c = getopt(argc, argv, "rpdn:")) != -1) {
+	while((c = getopt(argc, argv, "rpdn:R:P:")) != -1) {
 		switch (c) {
 			case 'r':
 				opt |= Randsum;
 				break;
+			case 'R':
+				opt |= Randsum;
+				algoids[Randsum] = optarg;
+				break;
 			case 'p':
 				opt |= Sumprefix;
+				algoids[Sumprefix] = optarg;
 				break;
 			case 'd':
 				debugfd = 2;
@@ -153,11 +165,11 @@ main(int argc, char *argv[]) {
 		m->n = todo;
 		if(opt & Randsum) {
 			randsumExp(todo, m);
-			putm(1, *m, "randsum");
+			putm(1, *m, algoids[Randsum]);
 		}
 		if(opt & Sumprefix) {
 			sumprefixExp(todo, m);
-			putm(1, *m, "sumprefix");
+			putm(1, *m, algoids[Sumprefix]);
 		}
 	}
 

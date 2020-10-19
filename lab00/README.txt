@@ -38,3 +38,11 @@ Utils:
 	./scripts/repeat.sh 5 "env CTX=slurmctl+vec+ivdep+opt REV=183c82c ./scripts/remotebench.sh" >> R/datasets/data.csv
 ```
 
+./scripts/mkplot.R can be used to create plots out of the data. Use it like:
+```
+	./scripts/mkplot.R randsum < datasets/data.csv
+```
+Of course data can be filtered before feeding the program, e.g.:
+```
+	cat datasets/data.csv | grep 'omp' | ./scripts/mkplot.R
+```

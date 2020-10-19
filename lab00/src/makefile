@@ -12,7 +12,6 @@ CFLAGS = -Wall -Wextra
 # CFLAGS += -O3
 
 # OpenMP
-export OMP_NUM_THREADS = 4
 CFLAGS += -fopenmp
 
 LDFLAGS = -fopenmp

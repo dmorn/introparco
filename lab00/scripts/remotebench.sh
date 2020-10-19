@@ -17,6 +17,7 @@ REV=${REV:?"variable must be set to a deployed benchmark revision"}
 MIN=1000
 MAX=100000
 STEP=2000
+THREADS=${THREADS:-4}
 
 JOB="#!/bin/bash
 
@@ -30,6 +31,7 @@ JOB="#!/bin/bash
 #SBATCH --time=00:01:00
 #SBATCH --ntasks=1
 
+export OMP_NUM_THREADS=${THREADS}
 srun -N 1 ./benchmark-${REV} -12c ${CTX} $(seq -s ' ' $MIN $STEP $MAX)
 "
 

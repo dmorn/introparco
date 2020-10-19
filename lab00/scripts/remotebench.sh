@@ -10,7 +10,8 @@ ADDR=${USER}@${HOST}
 ERR=std.err
 OUT=std.out
 
-SUF=${SUF:=""}
+PLATFORM=${PLATFORM:=""}
+EXP=${EXP:?"variable must be set to a suitable experiment name (usually some short platform id, hw used ecc..)"}
 REV=${REV:?"variable must be set to a deployed benchmark revision"}
 
 MIN=1000
@@ -29,7 +30,7 @@ JOB="#!/bin/bash
 #SBATCH --time=00:01:00
 #SBATCH --ntasks=1
 
-srun -N 1 ./benchmark-${REV} -R randsum${SUF} -P sumprefix${SUF} $(seq -s ' ' $MIN $STEP $MAX)
+srun -N 1 ./benchmark-${REV} -12p ${EXP} $(seq -s ' ' $MIN $STEP $MAX)
 "
 
 TMPFILE=$(mktemp)

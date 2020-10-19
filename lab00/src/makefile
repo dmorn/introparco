@@ -9,7 +9,7 @@ CFLAGS += -msse3 -mfpmath=sse -funroll-loops
 CFLAGS += -ftree-vectorizer-verbose=5
 
 # Optimization
-# CFLAGS += -O3
+CFLAGS += -O3
 
 # OpenMP
 

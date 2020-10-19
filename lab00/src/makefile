@@ -1,6 +1,13 @@
 CFLAGS = -Wall -Wextra
+
+# Vectorization
+# CFLAGS += -msse3 -mfpmath=sse -ftree-vectorizer-verbose
+
+# Optimization
+# CFLAGS += -O3
+
 LDFLAGS =
-CC = cc
+CC = gcc
 
 CMD ?= benchmark
 BUILDDIR = build

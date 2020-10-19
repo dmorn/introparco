@@ -20,6 +20,8 @@ now(void) {
 }
 
 typedef struct {
+	char *platform;
+	char *algo;
 	int n;
 	long alloc;
 	long free;
@@ -28,8 +30,8 @@ typedef struct {
 } Measurement;
 
 void
-putm(int fd, Measurement m, char *prefix) {
-	dprintf(fd, "%s,%d,%lu,%lu,%lu\n", prefix, m.n, m.alloc, m.free, m.exec);
+putm(int fd, Measurement m) {
+	dprintf(fd, "%s,%s,%d,%lu,%lu,%lu\n", m.platform, m.algo, m.n, m.alloc, m.free, m.exec);
 }
 
 void
@@ -102,10 +104,9 @@ usage(char *prog) {
 			"\n", prog);
 
 	fprintf(stderr, "N: list of array sizes. Each n will be a separate measurement\n"
-			"-r execute random sum algorithm\n"
-			"-R: same as -r, but changes algo identifier\n"
-			"-p execute sum prefix algorithm\n"
-			"-P: same as -R with -p\n"
+			"-1 execute random sum algorithm\n"
+			"-2 execute sum prefix algorithm\n"
+			"-p: change platform identifier (defaults to local)\n"
 			"-d turn on algorithmic specific debug prints\n");
 	return 1;
 }
@@ -116,26 +117,22 @@ main(int argc, char *argv[]) {
 	int c = 0, todoc = 0, todo = 0;
 	int *todov;
 	Measurement *m;
+	char *platform = "local";
 	debugfd = open("/dev/null", O_WRONLY);
 
-	while((c = getopt(argc, argv, "rpdn:R:P:")) != -1) {
+	while((c = getopt(argc, argv, "12dp:")) != -1) {
 		switch (c) {
-			case 'r':
-				opt |= Randsum;
-				break;
-			case 'R':
-				opt |= Randsum;
-				algoids[Randsum] = optarg;
-				break;
 			case 'p':
-				opt |= Sumprefix;
-				break;
-			case 'P':
-				opt |= Sumprefix;
-				algoids[Sumprefix] = optarg;
+				platform = optarg;
 				break;
 			case 'd':
 				debugfd = 2;
+				break;
+			case '1':
+				opt |= Randsum;
+				break;
+			case '2':
+				opt |= Sumprefix;
 				break;
 			default:
 				return usage(argv[0]);
@@ -163,16 +160,19 @@ main(int argc, char *argv[]) {
 	}
 
 	m = malloc(sizeof(Measurement));
+	m->platform = platform;
 	for(int i = 0; i < todoc; i++) {
 		todo = todov[i];
 		m->n = todo;
 		if(opt & Randsum) {
+			m->algo = algoids[Randsum];
 			randsumExp(todo, m);
-			putm(1, *m, algoids[Randsum]);
+			putm(1, *m);
 		}
 		if(opt & Sumprefix) {
+			m->algo = algoids[Sumprefix];
 			sumprefixExp(todo, m);
-			putm(1, *m, algoids[Sumprefix]);
+			putm(1, *m);
 		}
 	}
 

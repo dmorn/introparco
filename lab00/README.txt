@@ -31,3 +31,10 @@ Remote testing:
 	env REV=<revision> CTX=<passed as argument to benchmark -c> ./scripts/remotebench.sh
 ```
 
+---
+Utils:
+./scripts/repeat.sh can be used to repeat a measurement (or any command actually). Use it like:
+```
+	./scripts/repeat.sh 5 "env CTX=slurmctl+vec+ivdep+opt REV=183c82c ./scripts/remotebench.sh" >> R/datasets/data.csv
+```
+

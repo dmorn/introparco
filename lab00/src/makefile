@@ -1,7 +1,9 @@
 CFLAGS = -Wall -Wextra
 
-# Vectorization
-CFLAGS += -msse3 -mfpmath=sse -ftree-vectorizer-verbose
+# Vectorization Darwin
+# CFLAGS += -msse3 -mfpmath=sse -ftree-vectorizer-verbose
+# Vectorization Linux
+CFLAGS += -msse3 -mfpmath=sse -ftree-vectorizer-verbose=5
 
 # Optimization
 # CFLAGS += -O3

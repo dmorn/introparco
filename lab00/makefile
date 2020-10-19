@@ -4,7 +4,7 @@ ADDR = $(USER)@$(HOST)
 
 SRC = src
 
-REV = $(shell git rev-parse --short HEAD)
+REV ?= $(shell git rev-parse --short HEAD)
 export RELNAME = release-$(REV)
 export RELARCHIVE = $(RELNAME).tar.gz
 export CMD = benchmark

@@ -1,12 +1,17 @@
 CFLAGS = -Wall -Wextra
 
+# Vectorization
+CFLAGS += -msse3 -mfpmath=sse -funroll-loops
+
 # Vectorization Darwin
-# CFLAGS += -msse3 -mfpmath=sse -ftree-vectorizer-verbose
+# CFLAGS += -ftree-vectorizer-verbose
 # Vectorization Linux
-CFLAGS += -msse3 -mfpmath=sse -ftree-vectorizer-verbose=5
+CFLAGS += -ftree-vectorizer-verbose=5
 
 # Optimization
-CFLAGS += -O3
+# CFLAGS += -O3
+
+# OpenMP
 
 LDFLAGS =
 CC = gcc

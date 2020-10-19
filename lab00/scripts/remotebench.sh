@@ -37,7 +37,6 @@ TMPFILE=$(mktemp)
 echo "$JOB" > $TMPFILE
 chmod +x $TMPFILE
 
-
 # Execute the script remotely, waiting for it to complete.
 JOBNAME=$(basename ${TMPFILE})
 scp $TMPFILE ${ADDR}:. 1>&2

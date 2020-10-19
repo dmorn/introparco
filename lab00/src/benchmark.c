@@ -20,7 +20,7 @@ now(void) {
 }
 
 typedef struct {
-	char *platform;
+	char *ctx;
 	char *algo;
 	int n;
 	long alloc;
@@ -31,7 +31,7 @@ typedef struct {
 
 void
 putm(int fd, Measurement m) {
-	dprintf(fd, "%s,%s,%d,%lu,%lu,%lu\n", m.platform, m.algo, m.n, m.alloc, m.free, m.exec);
+	dprintf(fd, "%s,%s,%d,%lu,%lu,%lu\n", m.ctx, m.algo, m.n, m.alloc, m.free, m.exec);
 }
 
 void
@@ -106,7 +106,7 @@ usage(char *prog) {
 	fprintf(stderr, "N: list of array sizes. Each n will be a separate measurement\n"
 			"-1 execute random sum algorithm\n"
 			"-2 execute sum prefix algorithm\n"
-			"-p: change platform identifier (defaults to local)\n"
+			"-c: change ctx identifier (defaults to local)\n"
 			"-d turn on algorithmic specific debug prints\n");
 	return 1;
 }
@@ -117,13 +117,13 @@ main(int argc, char *argv[]) {
 	int c = 0, todoc = 0, todo = 0;
 	int *todov;
 	Measurement *m;
-	char *platform = "local";
+	char *ctx = "local";
 	debugfd = open("/dev/null", O_WRONLY);
 
-	while((c = getopt(argc, argv, "12dp:")) != -1) {
+	while((c = getopt(argc, argv, "12dc:")) != -1) {
 		switch (c) {
-			case 'p':
-				platform = optarg;
+			case 'c':
+				ctx = optarg;
 				break;
 			case 'd':
 				debugfd = 2;
@@ -160,7 +160,7 @@ main(int argc, char *argv[]) {
 	}
 
 	m = malloc(sizeof(Measurement));
-	m->platform = platform;
+	m->ctx = ctx;
 	for(int i = 0; i < todoc; i++) {
 		todo = todov[i];
 		m->n = todo;

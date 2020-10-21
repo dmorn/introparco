@@ -2,47 +2,53 @@
 This content is only relevant for my fellow colleaques of the SEIS
 master @ UNIBZ.
 
-Legenda:
-`line`              -> code
-``` ...lines... ``` -> multi-line code
 
----
-Local testing:
+Probably out-of-date usage from ./src/benchmark:
 ```
-	cd src
-	make
-	./benchmark -12
-```
-Notes:
- - run `./benchmark` for usage help
- - `./benchmark > file.csv` can be used to pipe the results to file.csv
- - `./benchmark -c <name>` can be used to change the context column,
-   I use it to identify experiments (i.e. mac+opt, slurmctl+opt+vec,...)
+./benchmark
+error: no algorithm was specified
 
----
-Remote testing:
-```
-	# compiles a copy of benchmark in the server. If you need to
-	# change compilation related things, edit src/makefile.
-	make deploy
+usage: ./benchmark <flags> <N>
+note: at least one algo has to be specified
 
-	# Read the revision from previous command's output, or
-	# run `git rev-parse --short HEAD`
-	env REV=<revision> CTX=<passed as argument to benchmark -c> ./scripts/remotebench.sh
+N: list of array sizes. Each n will be a separate measurement
+-1 execute random sum algorithm
+-2 execute sum prefix algorithm
+-c: change ctx identifier (defaults to local)
+-d turn on algorithmic specific debug prints
 ```
 
----
-Utils:
-./scripts/repeat.sh can be used to repeat a measurement (or any command actually). Use it like:
+Measurements can be made by
+1. Editing things in src/
+2. Measuring performance on localhost
+3. Measuring performance on remote
+
+For the 2nd task the `mkbench-local.sh` script can be exploited. I
+use it like this:
 ```
-	./scripts/repeat.sh 5 "env CTX=slurmctl+vec+ivdep+opt REV=183c82c ./scripts/remotebench.sh" >> R/datasets/data.csv
+# src/ edit phase, then
+% env CTX=mac+omppfor+opt N=10 ./mkbench-local.sh >> data.csv
+```
+Where:
+- N is the number of times the same task is executed, and
+- CTX will be the first column in the produced data.
+
+For the 3rd tasks, the remote version of the script above is
+available:
+```
+% env CTX=slurm+vec+opt N=10 ./mkbench-remote.sh >> data.csv
 ```
 
-./scripts/mkplot.R can be used to create plots out of the data. Use it like:
+Checkout the scripts for configuring things, in particular
+`remotesbatch.sh` for SSH access configuration to the cluster.
+
+Last but not least, data is csv encoded, with header (not present)
 ```
-	./scripts/mkplot.R randsum < datasets/data.csv
+context,algorithm,alloc() time, free() time, execution time
 ```
-Of course data can be filtered before feeding the program, e.g.:
+The .mkplot.R produces the `plot.pdf` file when fed with data
 ```
-	cat datasets/data.csv | grep 'omp' | ./scripts/mkplot.R
+% ./mkplot.R < measurements/data.csv
 ```
+Extra: `grep` data before feeding mkplot for filtering irrelevant experiments
+

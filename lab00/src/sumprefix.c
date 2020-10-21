@@ -3,10 +3,11 @@
 #include "sumprefix.h"
 
 void
-sumprefix(int n, int *a, int *c) {
+sumprefix(int n, unsigned int *a, unsigned int *c) {
 	int acc = 0;
+#pragma omp parallel for
 	for (int i = 0; i < n; i++) {
-		a[i] = rand() % (INT_MAX/n);
+		a[i] = rand() % (UINT_MAX/n);
 		acc += a[i];
 		c[i] = acc;
 	}

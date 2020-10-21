@@ -1,1 +1,1 @@
-void randsum(int n, int *a, int *b, int *c);
+void randsum(int n, unsigned int *a, unsigned int *b, unsigned int *c);

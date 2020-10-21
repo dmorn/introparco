@@ -11,7 +11,7 @@ int debugfd;
 /* time interval since epoch in nanoseconds.
  * Exits if an error is encountered, hence it
  * just suitable for benchmarking. */
-long
+double
 now(void) {
 	struct timespec t;
 	if (!timespec_get(&t, TIME_UTC))
@@ -23,26 +23,26 @@ typedef struct {
 	char *ctx;
 	char *algo;
 	int n;
-	long alloc;
-	long free;
-	long exec;
+	double alloc;
+	double free;
+	double exec;
 
 } Measurement;
 
 void
 putm(int fd, Measurement m) {
-	dprintf(fd, "%s,%s,%d,%lu,%lu,%lu\n", m.ctx, m.algo, m.n, m.alloc, m.free, m.exec);
+	dprintf(fd, "%s,%s,%d,%.0f,%.0f,%.0f\n", m.ctx, m.algo, m.n, m.alloc, m.free, m.exec);
 }
 
 void
 randsumExp(int n, Measurement* m) {
 	long tic;
-	int *a, *b, *c;
+	unsigned int *a, *b, *c;
 
 	tic = now();
-	a = malloc(sizeof(int)*n);
-	b = malloc(sizeof(int)*n);
-	c = malloc(sizeof(int)*n);
+	a = malloc(sizeof(unsigned int)*n);
+	b = malloc(sizeof(unsigned int)*n);
+	c = malloc(sizeof(unsigned int)*n);
 	m->alloc = now() - tic;
 
 	tic = now();
@@ -62,11 +62,11 @@ randsumExp(int n, Measurement* m) {
 void
 sumprefixExp(int n, Measurement *m) {
 	long tic;
-	int *a, *c;
+	unsigned int *a, *c;
 
 	tic = now();
-	a = malloc(sizeof(int)*n);
-	c = malloc(sizeof(int)*n);
+	a = malloc(sizeof(unsigned int)*n);
+	c = malloc(sizeof(unsigned int)*n);
 	m->alloc = now() - tic;
 
 	tic = now();

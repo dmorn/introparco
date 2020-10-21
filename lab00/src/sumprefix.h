@@ -1,1 +1,1 @@
-void sumprefix(int n, int *a, int *c);
+void sumprefix(int n, unsigned int *a, unsigned int *c);

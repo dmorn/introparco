@@ -12,7 +12,7 @@ plot.mem <- function(df, a = "sumprefix") {
     geom_line(aes(x = n, y = alloc, colour = "alloc()")) +
     geom_line(aes(x = n, y = memtot, colour = "tot")) +
     scale_x_continuous("array size", labels = scales::label_number_si()) +
-    scale_y_continuous("execution time (ms)", breaks = scales::breaks_width(20)) +
+    scale_y_continuous("execution time (ms)") +
     facet_wrap(vars(ctx)) +
     theme(legend.position = "bottom", legend.title = element_blank())
 }
@@ -24,7 +24,7 @@ plot.exec <- function(df, a = "sumprefix") {
     ggtitle(a) +
     geom_line(aes(x = n, y = exec, colour = ctx)) +
     scale_x_continuous("array size", labels = scales::label_number_si()) +
-    scale_y_continuous("execution time (ms)", breaks = scales::breaks_width(400)) +
+    scale_y_continuous("execution time (ms)") +
     theme(legend.position = "bottom", legend.title = element_blank())
 }
 
@@ -44,15 +44,14 @@ df <-
     memtot = alloc + free
   )
 
-args <- commandArgs(TRUE)
-name <- args[1]
-if (name == "") {
-	stop("specify algorithm with the first argument")
-}
-outpdf <- sprintf("%s.pdf", name)
+pdf("plot.pdf")
 
-cat(sprintf("creating plots for [%s], output file: %s\n", name, outpdf))
-pdf(outpdf)
+name <- "randsum"
 plot.mem(df, a=name)
 plot.exec(df, a=name)
+
+name <- "sumprefix"
+plot.mem(df, a=name)
+plot.exec(df, a=name)
+
 dev.off()

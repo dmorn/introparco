@@ -12,10 +12,14 @@ CFLAGS = -Wall -Wextra
 # CFLAGS += -O3
 
 # OpenMP
-# CFLAGS += -fopenmp
+CFLAGS += -fopenmp
+# OpenMP Darwin
+# CFLAGS += -Xpreprocessor -fopenmp
 
-LDFLAGS =
-# LDFLAGS += -fopenmp
+# OpenMP Darwin
+# LDFLAGS = -Xpreprocessor -fopenmp -lomp
+# OpenMP
+LDFLAGS += -fopenmp
 
 CC = gcc
 
@@ -50,3 +54,5 @@ benchmark.o : benchmark.c sumprefix.h randsum.h
 	$(CC) -c $(CFLAGS) benchmark.c
 $(CMD) : benchmark.o sumprefix.o randsum.o
 	$(CC) $(LDFLAGS) $^ -o $@
+
+

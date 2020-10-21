@@ -12,9 +12,11 @@ CFLAGS = -Wall -Wextra
 # CFLAGS += -O3
 
 # OpenMP
-CFLAGS += -fopenmp
+# CFLAGS += -fopenmp
 
-LDFLAGS = -fopenmp
+LDFLAGS =
+# LDFLAGS += -fopenmp
+
 CC = gcc
 
 CMD ?= benchmark

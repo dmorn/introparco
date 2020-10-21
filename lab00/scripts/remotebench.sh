@@ -14,9 +14,6 @@ PLATFORM=${PLATFORM:=""}
 CTX=${CTX:?"variable must be set to a suitable experiment name (usually some short platform id, hw used ecc..)"}
 REV=${REV:?"variable must be set to a deployed benchmark revision"}
 
-MIN=1000
-MAX=100000
-STEP=2000
 THREADS=${THREADS:-4}
 
 JOB="#!/bin/bash
@@ -31,8 +28,11 @@ JOB="#!/bin/bash
 #SBATCH --time=00:01:00
 #SBATCH --ntasks=1
 
+module load gcc-6.5.0
+
 export OMP_NUM_THREADS=${THREADS}
-srun -N 1 ./benchmark-${REV} -12c ${CTX} $(seq -s ' ' $MIN $STEP $MAX)
+
+srun -N 1 ./benchmark-${REV} -12c ${CTX} 256 65536 16777216 1073741824
 "
 
 TMPFILE=$(mktemp)

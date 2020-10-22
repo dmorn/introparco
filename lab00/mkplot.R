@@ -32,7 +32,7 @@ plot.exec <- function(df, a = "sumprefix") {
 names <- c("ctx", "algo", "n", "alloc", "free", "exec")
 
 df <-
-  file("stdin") %>%
+  "data.csv" %>%
   read_csv(col_names = names, col_types = cols()) %>%
   group_by(n, ctx, algo) %>%
   summarise(
@@ -44,8 +44,6 @@ df <-
     memtot = alloc + free
   )
 
-pdf("plot.pdf")
-
 name <- "randsum"
 plot.mem(df, a=name)
 plot.exec(df, a=name)
@@ -54,4 +52,3 @@ name <- "sumprefix"
 plot.mem(df, a=name)
 plot.exec(df, a=name)
 
-dev.off()

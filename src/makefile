@@ -12,14 +12,15 @@ CFLAGS = -Wall -Wextra
 # CFLAGS += -O3
 
 # OpenMP
-CFLAGS += -fopenmp
+# CFLAGS += -fopenmp
 # OpenMP Darwin
 # CFLAGS += -Xpreprocessor -fopenmp
 
+LDFLAGS =
 # OpenMP Darwin
-# LDFLAGS = -Xpreprocessor -fopenmp -lomp
+# LDFLAGS += -Xpreprocessor -fopenmp -lomp
 # OpenMP
-LDFLAGS += -fopenmp
+# LDFLAGS += -fopenmp
 
 CC = gcc
 

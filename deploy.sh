@@ -11,15 +11,13 @@ export RELNAME=release-${REV}
 export RELARCHIVE=${RELNAME}.tar.gz
 
 SRC=src
-EXEC=${CMD}-${REV}
+HOSTREL=./${RELNAME}
 
-HOSTDIST=dist-$(basename $(pwd))
-HOSTREL=${HOSTDIST}/${RELNAME}
+(cd ${SRC} && make release && mv ${RELARCHIVE} ..)
+scp ${RELARCHIVE} ${ADDR}:.
+ssh ${ADDR} "rm -r ${HOSTREL} 2>/dev/null"
+ssh ${ADDR} "mkdir -p ${HOSTREL} 2>/dev/null"
+ssh ${ADDR} "tar -zxf ${RELARCHIVE} -C ${HOSTREL}"
+ssh ${ADDR} "rm ${RELARCHIVE}"
 
-(cd ${SRC} && make release)
-
-ssh ${ADDR} "rm -r ${HOSTREL}; mkdir -p ${HOSTREL}"
-scp ${SRC}/${RELARCHIVE} ${ADDR}:.
-ssh ${ADDR} "tar -zxf ${RELARCHIVE} -C ${HOSTREL}; rm ${RELARCHIVE}"
-ssh ${ADDR} "cd ${HOSTREL}; make && mv ${CMD} ../../${EXEC}"
-echo ${EXEC} deployed!
+echo 🚀 ${ADDR}:${HOSTREL}

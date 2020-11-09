@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <time.h>
+#include <stdint.h>
 #include "randsum.h"
 #include "sumprefix.h"
 
@@ -35,14 +36,14 @@ putm(int fd, Measurement m) {
 }
 
 void
-randsumExp(int n, Measurement* m) {
+randsumExp(int n, Measurement *m) {
 	long tic;
-	unsigned int *a, *b, *c;
+	uint32_t *a, *b, *c;
 
 	tic = now();
-	a = malloc(sizeof(unsigned int)*n);
-	b = malloc(sizeof(unsigned int)*n);
-	c = malloc(sizeof(unsigned int)*n);
+	a = malloc(sizeof(uint32_t)*n);
+	b = malloc(sizeof(uint32_t)*n);
+	c = malloc(sizeof(uint32_t)*n);
 	m->alloc = now() - tic;
 
 	tic = now();
@@ -62,11 +63,11 @@ randsumExp(int n, Measurement* m) {
 void
 sumprefixExp(int n, Measurement *m) {
 	long tic;
-	unsigned int *a, *c;
+	uint32_t *a, *c;
 
 	tic = now();
-	a = malloc(sizeof(unsigned int)*n);
-	c = malloc(sizeof(unsigned int)*n);
+	a = malloc(sizeof(uint32_t)*n);
+	c = malloc(sizeof(uint32_t)*n);
 	m->alloc = now() - tic;
 
 	tic = now();
@@ -86,10 +87,6 @@ enum {
 	Randsum = 1,
 	Sumprefix,
 };
-
-/* Exp function signature is shared across sumprefixExp and
- * randsumExp functions. */
-typedef void(*Exp)(int n, Measurement *m);
 
 char *algoids[] = {
 	[Randsum] = "randsum",
@@ -113,9 +110,9 @@ usage(char *prog) {
 
 int
 main(int argc, char *argv[]) {
-	unsigned int opt = 0;
-	int c = 0, todoc = 0, todo = 0;
+	int opt = 0;
 	int *todov;
+	int c = 0, todoc = 0, todo = 0;
 	Measurement *m;
 	char *ctx = "local";
 	debugfd = open("/dev/null", O_WRONLY);

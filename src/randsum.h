@@ -1,1 +1,3 @@
-void randsum(int n, unsigned int *a, unsigned int *b, unsigned int *c);
+#include <stdint.h>
+
+void randsum(int n, uint32_t *a, uint32_t *b, uint32_t *c);

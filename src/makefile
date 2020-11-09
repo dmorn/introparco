@@ -1,4 +1,4 @@
-CFLAGS = -Wall -Wextra
+CFLAGS =
 
 # Vectorization
 # CFLAGS += -msse3 -mfpmath=sse -funroll-loops
@@ -21,8 +21,11 @@ LDFLAGS =
 # LDFLAGS += -Xpreprocessor -fopenmp -lomp
 # OpenMP
 # LDFLAGS += -fopenmp
+# LDFLAGS += -lcudart
 
 CC = gcc
+VCC = nvcc
+LD = gcc
 
 CMD ?= benchmark
 BUILDDIR = build
@@ -44,16 +47,15 @@ clean :
 	rm $(CMD)
 
 release : $(RELARCHIVE)
-$(RELARCHIVE) : *.c *.h makefile
+$(RELARCHIVE) : *.c *.cu *.h *.sh *.dat makefile
 	tar -zc $^ > $@
 
-sumprefix.o : sumprefix.c sumprefix.h
-	$(CC) -c $(CFLAGS) sumprefix.c
 randsum.o : randsum.c randsum.h
 	$(CC) -c $(CFLAGS) randsum.c
+sumprefix.o : sumprefix.c sumprefix.h
+	$(CC) -c $(CFLAGS) sumprefix.c
 benchmark.o : benchmark.c sumprefix.h randsum.h
 	$(CC) -c $(CFLAGS) benchmark.c
+
 $(CMD) : benchmark.o sumprefix.o randsum.o
-	$(CC) $(LDFLAGS) $^ -o $@
-
-
+	$(LD) $(LDFLAGS) $^ -o $@

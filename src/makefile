@@ -21,14 +21,13 @@ LDFLAGS =
 # LDFLAGS += -Xpreprocessor -fopenmp -lomp
 # OpenMP
 # LDFLAGS += -fopenmp
-# LDFLAGS += -lcudart
+LDFLAGS += -lcudart -L/usr/local/cuda-10.2/lib64
 
 CC = gcc
 VCC = nvcc
 LD = gcc
 
 CMD ?= benchmark
-BUILDDIR = build
 BINDIR = /usr/local/bin
 
 RELNAME ?= release
@@ -51,7 +50,7 @@ $(RELARCHIVE) : *.c *.cu *.h *.sh *.dat makefile
 	tar -zc $^ > $@
 
 randsum.o : randsum.c randsum.h
-	$(CC) -c $(CFLAGS) randsum.c
+	$(VCC) -c $(CFLAGS) randsum.cu
 sumprefix.o : sumprefix.c sumprefix.h
 	$(CC) -c $(CFLAGS) sumprefix.c
 benchmark.o : benchmark.c sumprefix.h randsum.h

@@ -12,7 +12,7 @@ void k_randsum(int n, uint32_t *a, uint32_t *b, uint32_t *c) {
 	}
 }
 
-extern "C" void randsum(int n, uint32_t *a, uint32_t *b, uint32_t *c) {
+void randsum(int n, uint32_t *a, uint32_t *b, uint32_t *c) {
 	uint32_t *da, *db, *dc;
 	size_t s;
 	int thd, blk;

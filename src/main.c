@@ -37,7 +37,7 @@ putm(int fd, Measurement m) {
 
 extern void randsum(int n, uint32_t *a, uint32_t *b, uint32_t *c);
 
-void
+int
 randsumExp(int n, Measurement *m) {
 	long tic;
 	uint32_t *a, *b, *c;
@@ -53,6 +53,9 @@ randsumExp(int n, Measurement *m) {
 	m->exec = now() - tic;
 
 	for (int i = 0; i < n; i++) {
+		if (c[i] != a[i] + b[i])
+			return 1;
+
 		dprintf(debugfd, "%d,%d,%d\n", a[i], b[i], c[i]);
 	}
 	tic = now();
@@ -60,9 +63,10 @@ randsumExp(int n, Measurement *m) {
 	free(b);
 	free(c);
 	m->free = now() - tic;
+	return 0;
 }
 
-void
+int
 sumprefixExp(int n, Measurement *m) {
 	long tic;
 	uint32_t *a, *c;
@@ -77,12 +81,16 @@ sumprefixExp(int n, Measurement *m) {
 	m->exec = now() - tic;
 
 	for (int i = 0; i < n; i++) {
+		if ((i) && c[i] != c[i-1] + a[i-1])
+			return 1;
+
 		dprintf(debugfd, "%d,%d\n", a[i], c[i]);
 	}
 	tic = now();
 	free(a);
 	free(c);
 	m->free = now() - tic;
+	return 0;
 }
 
 enum {
@@ -165,12 +173,18 @@ main(int argc, char *argv[]) {
 		m->n = todo;
 		if(opt & Randsum) {
 			m->algo = algoids[Randsum];
-			randsumExp(todo, m);
+			if(randsumExp(todo, m)) {
+				fprintf(stderr, "error: invalid randsum output\n");
+				return 2;
+			}
 			putm(1, *m);
 		}
 		if(opt & Sumprefix) {
 			m->algo = algoids[Sumprefix];
-			sumprefixExp(todo, m);
+			if(sumprefixExp(todo, m)){
+				fprintf(stderr, "error: invalid sumprefix output\n");
+				return 2;
+			}
 			putm(1, *m);
 		}
 	}

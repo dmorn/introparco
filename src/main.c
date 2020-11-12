@@ -35,6 +35,8 @@ putm(int fd, Measurement m) {
 	dprintf(fd, "%s,%s,%d,%.0f,%.0f,%.0f\n", m.ctx, m.algo, m.n, m.alloc, m.free, m.exec);
 }
 
+extern void randsum(int n, uint32_t *a, uint32_t *b, uint32_t *c);
+
 void
 randsumExp(int n, Measurement *m) {
 	long tic;

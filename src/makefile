@@ -1,41 +1,26 @@
-CUDAHOME =
-CFLAGS = -c -I$(CUDA_HOME)/include
-LDFLAGS = -L$(CUDA_HOME)/lib64 -lcudart -lstdc++
-CUDAFLAGS = -c
-
 CC = gcc
+CFLAGS = -c -ansi -Wall -pedantic -g
+
 LD = gcc
+LDFLAGS = -g
+NVLDFLAGS = -L$(CUDA_HOME)/lib64 -lcudart -lstdc++
 
-CMD ?= benchmark
-BINDIR = /usr/local/bin
+NVCC = nvcc
+NVCFLAGS = -c
 
-RELNAME ?= release
-RELARCHIVE ?= $(RELNAME).tar.gz
+all: randsum randsum.cuda
 
-.PHONY : deploy all install clean release
+%.o: %.c
+	$(CC) $(CFLAGS) $^
+cuda/%.o: cuda/%.cu
+	nvcc $(NVCFLAGS) -o $@ $^
 
-all : $(CMD)
-install : $(CMD)
-	mv $(CMD) $(BINDIR)
-uninstall :
-	rm $(BINDIR)/$(CMD)
-clean :
-	rm *.o
-	rm *.tar.gz
-	rm $(CMD)
+randsum.cuda: cuda/randsum.o randsumexp.o main.o
+	$(CC) $^ -o $@ $(LDFLAGS) $(NVLDFLAGS)
 
-release : $(RELARCHIVE)
-$(RELARCHIVE) : *.c *.cu *.h *.sh *.dat makefile
-	tar -zc $^ > $@
-
-randsum.o : randsum.cu randsum.h
-	nvcc -o $@ randsum.cu $(CUDAFLAGS)
-
-sumprefix.o : sumprefix.c sumprefix.h
-	$(CC) $(CFLAGS) sumprefix.c
-
-main.o : main.c sumprefix.h randsum.h
-	$(CC) $(CFLAGS) main.c
-
-$(CMD) : main.o sumprefix.o randsum.o
+randsum: port.o main.o randsumexp.o
 	$(LD) $^ -o $@ $(LDFLAGS)
+
+clean:
+	rm *.o *.gch cuda/*.o
+

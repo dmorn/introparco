@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+#set -e
 
 USER=${USER:-dmorandini}
 HOST=${HOST:-slurm-ctrl.inf.unibz.it}

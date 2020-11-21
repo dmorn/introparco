@@ -1,15 +1,26 @@
-RELNAME ?= release
-RELARCHIVE ?= $(RELNAME).tgz
 SRC = src
+BIN = bin
+SCRIPTS = scripts
+SIZE ?= 67108864 # 2^26
 
-all:
-	$(MAKE) -C $(SRC)
+all: r.report r.cuda.report
 
-archive: $(RELARCHIVE)
-$(RELARCHIVE): *
+%.tgz: README.txt makefile scripts src bin
 	$(MAKE) -C $(SRC) -i clean
 	tar -zc $^ > $@
 
-clean:
+$(BIN)/%:
+	$(MAKE) -C $(SRC) all
+
+%.nvprof: $(BIN)/%
+	$(SCRIPTS)/srun.sh nvprof -o $@ --cpu-profiling on $^ $(SIZE)
+
+%.report: %.nvprof
+	nvprof -i $^ --cpu-profiling-mode top-down 2> $@
+
+clean-report:
+	rm *.report *.nvprof
+
+clean: clean-report
 	$(MAKE) -C $(SRC) -i clean
-	rm *.tgz
+	rm *.tgz *.report *.nvprof

@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <cuda.h>
-#include "../randsum.h"
-#include "../exp.h"
+#include "r.h"
+#include "exp.h"
 
 char *expdesc = "randsum cuda with cuda kernel";
 

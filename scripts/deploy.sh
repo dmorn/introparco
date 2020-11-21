@@ -1,25 +1,17 @@
 #!/bin/sh
 
-#set -e
-
-USER=${USER:-dmorandini}
-HOST=${HOST:-slurm-ctrl.inf.unibz.it}
-ADDR=${USER}@${HOST}
-
-export REV=${REV:-$(git rev-parse --short HEAD)}
-export RELNAME=release-${REV}
-export RELARCHIVE=${RELNAME}.tar.gz
+set -e
 
 DIR=$(dirname "$0")
-HOSTREL=./src/labs/${RELNAME}
+. $DIR/env.sh
 
-(cd ${DIR}/.. && make -i clean && make archive mv ${RELARCHIVE} $DIR)
-scp ${DIR}/${RELARCHIVE} ${ADDR}:.
-ssh ${ADDR} "rm -r ${HOSTREL} 2>/dev/null"
+(cd ${DIR}/.. && make -i clean && make ${ARCHIVE} && mv ${ARCHIVE} $DIR)
+scp ${DIR}/${ARCHIVE} ${ADDR}:.
+ssh ${ADDR} "rm -fr ${HOSTREL} 2>/dev/null"
 ssh ${ADDR} "mkdir -p ${HOSTREL} 2>/dev/null"
-ssh ${ADDR} "tar -zxf ${RELARCHIVE} -C ${HOSTREL}"
+ssh ${ADDR} "tar -zxf ${ARCHIVE} -C ${HOSTREL}"
 
-rm ${DIR}/${RELARCHIVE}
-ssh ${ADDR} "rm ${RELARCHIVE}"
+rm ${DIR}/${ARCHIVE}
+ssh ${ADDR} "rm ${ARCHIVE}"
 
 echo 🚀 ${ADDR}:${HOSTREL}

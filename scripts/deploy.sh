@@ -5,7 +5,12 @@ set -e
 DIR=$(dirname "$0")
 . $DIR/env.sh
 
-(cd ${DIR}/.. && make -i clean && make ${ARCHIVE} && mv ${ARCHIVE} $DIR)
+cd ${DIR}/..
+make -i clean
+make ${ARCHIVE}
+mv ${ARCHIVE} $DIR
+cd -
+
 scp ${DIR}/${ARCHIVE} ${ADDR}:.
 ssh ${ADDR} "rm -fr ${HOSTREL} 2>/dev/null"
 ssh ${ADDR} "mkdir -p ${HOSTREL} 2>/dev/null"

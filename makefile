@@ -3,10 +3,9 @@ BIN = bin
 SCRIPTS = scripts
 SIZE ?= 67108864 # 2^26
 
-all: r.report r.cuda.report
+all: *.txt
 
-%.tgz: README.txt makefile scripts src bin
-	$(MAKE) -C $(SRC) -i clean
+%.tgz: makefile scripts src bin
 	tar -zc $^ > $@
 
 $(BIN)/%:
@@ -15,12 +14,15 @@ $(BIN)/%:
 %.nvprof: $(BIN)/%
 	$(SCRIPTS)/srun.sh nvprof -o $@ --cpu-profiling on $^ $(SIZE)
 
-%.report: %.nvprof
+%.txt: %.nvprof
 	nvprof -i $^ --cpu-profiling-mode top-down 2> $@
 
-clean-report:
-	rm *.report *.nvprof
+%.csv: %.nvprof
+	nvprof -i $^ --cpu-profiling-mode top-down --csv 2> $@
 
-clean: clean-report
+clean-nvprof:
+	rm *.txt *.nvprof *.csv
+
+clean: clean-nvprof
 	$(MAKE) -C $(SRC) -i clean
-	rm *.tgz *.report *.nvprof
+	rm *.tgz *.nvprof *.nvprof

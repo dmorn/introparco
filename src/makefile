@@ -13,6 +13,7 @@ all: $(BUILD)/r $(BUILD)/r.cuda
 
 %.o: %.c
 	$(CC) $(CFLAGS) $^
+
 %.o: %.cu
 	nvcc $(NVCFLAGS) -o $@ $^
 

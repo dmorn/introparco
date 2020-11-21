@@ -3,5 +3,8 @@ RELARCHIVE ?= $(RELNAME).tgz
 
 release: $(RELARCHIVE)
 $(RELARCHIVE): *
-	tar -zc $^ --exclude *.o > $@
+	$(MAKE) -C src -i clean
+	tar -zc $^ > $@
 
+clean:
+	rm *.tgz

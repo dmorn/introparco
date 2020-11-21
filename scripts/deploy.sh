@@ -11,7 +11,7 @@ export RELNAME=release-${REV}
 export RELARCHIVE=${RELNAME}.tar.gz
 
 DIR=$(dirname "$0")
-HOSTREL=./${RELNAME}
+HOSTREL=./src/labs/${RELNAME}
 
 (cd ${DIR}/.. && make release && mv ${RELARCHIVE} $DIR)
 scp ${DIR}/${RELARCHIVE} ${ADDR}:.

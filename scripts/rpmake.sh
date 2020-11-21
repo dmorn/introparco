@@ -5,8 +5,6 @@ DIR=$(dirname "$0")
 
 set -e
 
-echo  🛠   $@ on $ADDR
-
 ssh $ADDR  $(cat << EOF
 	source /etc/profile; module load cuda-10.2 gcc-6.5.0 && \
 	make -C ${HOSTREL} -i clean-nvprof && \

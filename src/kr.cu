@@ -4,10 +4,9 @@
 #include "r.h"
 #include "exp.h"
 
-char *expdesc = "randsum cuda with cuda kernel";
+char *expdesc = (char *) "randsum cuda with cuda kernel";
 
-__global__
-void
+__global__ void
 k_randsum(int n, uint *a, uint *b, uint *c) {
 	int i = blockDim.x * blockIdx.x + threadIdx.x;
 	if(i < n) {

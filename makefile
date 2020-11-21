@@ -1,10 +1,15 @@
 RELNAME ?= release
 RELARCHIVE ?= $(RELNAME).tgz
+SRC = src
 
-release: $(RELARCHIVE)
+all:
+	$(MAKE) -C $(SRC)
+
+archive: $(RELARCHIVE)
 $(RELARCHIVE): *
-	$(MAKE) -C src -i clean
+	$(MAKE) -C $(SRC) -i clean
 	tar -zc $^ > $@
 
 clean:
+	$(MAKE) -C $(SRC) -i clean
 	rm *.tgz

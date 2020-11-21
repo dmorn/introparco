@@ -13,7 +13,7 @@ export RELARCHIVE=${RELNAME}.tar.gz
 DIR=$(dirname "$0")
 HOSTREL=./src/labs/${RELNAME}
 
-(cd ${DIR}/.. && make release && mv ${RELARCHIVE} $DIR)
+(cd ${DIR}/.. && make -i clean && make archive mv ${RELARCHIVE} $DIR)
 scp ${DIR}/${RELARCHIVE} ${ADDR}:.
 ssh ${ADDR} "rm -r ${HOSTREL} 2>/dev/null"
 ssh ${ADDR} "mkdir -p ${HOSTREL} 2>/dev/null"

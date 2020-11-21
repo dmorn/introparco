@@ -1,0 +1,14 @@
+
+======== CPU profiling result (top down):
+Time(%)      Time  Name
+ 100.00%  3.14078s  main
+ 100.00%  3.14078s    runexp
+ 67.83%  2.13053s      rand
+ 67.52%  2.12053s      | random
+  6.37%  200.05ms      |   random_r
+  9.55%  300.07ms      randsum
+  1.27%   40.01ms      ???
+  0.96%  30.007ms      free
+  0.96%  30.007ms        munmap
+
+======== Data collected at 100Hz frequency

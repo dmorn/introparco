@@ -4,8 +4,6 @@
 #include "r.h"
 #include "exp.h"
 
-char *expdesc = (char *) "randsum cuda with cuda kernel";
-
 __global__ void
 k_randsum(int n, uint *a, uint *b, uint *c) {
 	int i = blockDim.x * blockIdx.x + threadIdx.x;
@@ -31,8 +29,7 @@ randsum(int n, uint *a, uint *b, uint *c) {
 	thd = 256;
 	blk = (n+thd-1)/thd;
 
-	if(debug)
-		fprintf(stderr, "blk: %d, thd: %d\n", blk, thd);
+	fprintf(stderr, "blk: %d, thd: %d\n", blk, thd);
 	k_randsum<<<blk, thd>>>(n, da, db, dc);
 	cudaMemcpy(c, dc, s, cudaMemcpyDeviceToHost);
 

@@ -4,11 +4,10 @@
 #include "r.h"
 #include "exp.h"
 
-char*
+int
 runexp(int n) {
 	int i;
 	uint *a, *b, *c;
-	char *err;
 
 	a = malloc(sizeof(uint)*n);
 	b = malloc(sizeof(uint)*n);
@@ -21,17 +20,14 @@ runexp(int n) {
 
 	/* output validation */
 	for(i = 0; i < n; i++) {
-		if(debug)
-			fprintf(stderr, "%d,%d,%d\n", a[i], b[i], c[i]);
 		if(c[i] != a[i] + b[i]) {
-			err = malloc(sizeof(char)*90);
-			sprintf(err, "invalid output @ %d (a: %d, b: %d, c: %d)", i, a[i], b[i], c[i]);
-			return err;
+			fprintf(stderr, "invalid output @ %d (a: %d, b: %d, c: %d)", i, a[i], b[i], c[i]);
+			return n;
 		}
 	}
 
 	free(a);
 	free(b);
 	free(c);
-	return NULL;
+	return 0;
 }

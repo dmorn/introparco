@@ -33,8 +33,8 @@ randsum(int n, uint *a, uint *b, uint *c) {
 	blk = (n+thd-1)/thd;
 
 	if(debug)
-		fprintf(stderr, "thd: %d, blk: %d\n", thd, blk);
-	k_randsum<<<thd, blk>>>(n, da, db, dc);
+		fprintf(stderr, "blk: %d, thd: %d\n", blk, thd);
+	k_randsum<<<blk, thd>>>(n, da, db, dc);
 	cudaMemcpy(c, dc, s, cudaMemcpyDeviceToHost);
 
 	cudaFree(da);

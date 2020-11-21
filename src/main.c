@@ -3,7 +3,7 @@
 #include <string.h>
 #include "exp.h"
 
-int debug = 0;
+int debug = 1;
 
 int
 usage(int code, char *s) {

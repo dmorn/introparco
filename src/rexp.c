@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stdio.h>
-#include "randsum.h"
+#include "r.h"
 #include "exp.h"
 
 char*

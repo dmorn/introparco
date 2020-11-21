@@ -7,20 +7,21 @@ NVLDFLAGS = -L$(CUDA_HOME)/lib64 -lcudart -lstdc++
 
 NVCC = nvcc
 NVCFLAGS = -c
+BUILD = build
 
-all: randsum randsum.cuda
+all: $(BUILD)/r $(BUILD)/r.cuda
 
 %.o: %.c
 	$(CC) $(CFLAGS) $^
 cuda/%.o: cuda/%.cu
 	nvcc $(NVCFLAGS) -o $@ $^
 
-randsum.cuda: cuda/randsum.o randsumexp.o main.o
+$(BUILD)/r.cuda: cuda/r.o rexp.o main.o
 	$(CC) $^ -o $@ $(LDFLAGS) $(NVLDFLAGS)
 
-randsum: port.o main.o randsumexp.o
+$(BUILD)/r: port.o main.o rexp.o
 	$(LD) $^ -o $@ $(LDFLAGS)
 
 clean:
-	rm *.o *.gch cuda/*.o
+	rm *.o *.gch cuda/*.o build/*
 

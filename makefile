@@ -3,5 +3,5 @@ RELARCHIVE ?= $(RELNAME).tgz
 
 release: $(RELARCHIVE)
 $(RELARCHIVE): *
-	tar -zc $^ > $@
+	tar -zc $^ --exclude *.o > $@
 

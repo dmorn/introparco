@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <cuda.h>
-#include "r.h"
-#include "exp.h"
+#include "../r.h"
+#include "../exp.h"
 
 __global__ void
 k_randsum(int n, uint *a, uint *b, uint *c) {

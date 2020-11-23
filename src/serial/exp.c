@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stdio.h>
-#include "r.h"
-#include "exp.h"
+#include "../r.h"
+#include "../exp.h"
 
 int
 runexp(int n) {

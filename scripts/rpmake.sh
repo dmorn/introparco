@@ -1,18 +1,14 @@
 #!/bin/bash
 
-DIR=$(dirname "$0")
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 . $DIR/env.sh
 
 set -e
 
 ssh $ADDR  $(cat << EOF
 	source /etc/profile; module load cuda-10.2 gcc-6.5.0 && \
-	make -C ${HOSTREL} -i clean-nvprof && \
-	make -C ${HOSTREL} $@
+	make -C ${HOSTREL} -i clean-nvprof >&2 && \
+	make -C ${HOSTREL} $@ >&2 && \
+	cat $HOSTREL/$1
 EOF
 )
-
-REPORTS=reports/${RELNAME}
-mkdir -p $REPORTS
-scp $ADDR:$HOSTREL/$1 ${REPORTS}
-less ${REPORTS}/$1

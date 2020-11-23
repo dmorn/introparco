@@ -1,9 +1,7 @@
 /* contains portable versions of the algorithms implemented */
 
-#include "exp.h"
-#include "dat.h"
-
-char *expdesc = "normal randsum";
+#include "../dat.h"
+#include "../r.h"
 
 void
 randsum(int n, uint *a, uint *b, uint *c) {

@@ -1,0 +1,178 @@
+======== Profiling result:
+   Start  Duration            Grid Size      Block Size     Regs*    SSMem*    DSMem*      Size  Throughput  SrcMemType  DstMemType           Device   Context    Stream  Name
+     0ns  2.5660us                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetPCIBusId
+66.452ms  1.0110us                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetCount
+66.454ms     199ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetCount
+66.990ms  1.0890us                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGet
+66.992ms     737ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+67.088ms     580ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+67.106ms     807ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+67.379ms     436ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetCount
+67.380ms     278ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGet
+67.381ms  27.824us                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetName
+67.410ms  1.6157ms                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceTotalMem
+69.027ms     704ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.028ms     200ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.029ms     171ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.029ms     432ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.030ms     164ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.030ms  18.556us                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.049ms     262ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.049ms     172ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.050ms     159ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.050ms     162ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.050ms     384ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.051ms     159ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.051ms     153ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.052ms     164ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.052ms     160ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.052ms     155ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.053ms     161ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.053ms     160ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.054ms     159ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.054ms     160ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.054ms     152ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.055ms     158ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.055ms     232ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.055ms     257ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.056ms     168ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.056ms     154ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.056ms     154ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.057ms     224ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.057ms     154ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.057ms     154ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.058ms     152ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.058ms     158ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.058ms     154ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.059ms     154ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.059ms     163ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.059ms     161ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.060ms     169ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.060ms     164ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.060ms     155ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.061ms     163ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.061ms     160ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.062ms     156ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.062ms     157ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.062ms     164ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.063ms     152ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.063ms     153ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.063ms     153ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.064ms     154ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.064ms     156ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.064ms     158ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.065ms     156ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.065ms     155ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.065ms     162ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.066ms     184ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.066ms     169ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.066ms  74.394us                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.141ms     193ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.141ms     173ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.142ms     160ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.142ms     166ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.142ms     169ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.143ms     262ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.143ms     253ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.144ms     180ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.144ms     157ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.144ms     168ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.145ms     166ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.145ms     162ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.146ms     236ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.146ms     162ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.146ms     160ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.147ms     158ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.147ms     255ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.148ms     173ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.148ms     174ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.148ms     156ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.149ms  63.324us                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.212ms     204ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.213ms     258ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.213ms     161ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.213ms     161ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.214ms     162ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.214ms     162ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.214ms     161ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.215ms  1.2710us                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.216ms  28.807us                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.245ms     207ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.246ms     169ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.246ms  1.6610us                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.248ms     169ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.248ms     218ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.249ms     190ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.249ms     253ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.249ms     155ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetAttribute
+69.250ms     297ns                    -               -         -         -         -         -           -           -           -                -         -         -  cuDeviceGetUuid
+69.263ms  345.69ms                    -               -         -         -         -         -           -           -           -                -         -         -  cudaHostRegister
+414.96ms  34.347ms                    -               -         -         -         -         -           -           -           -                -         -         -  cudaHostRegister
+449.31ms  125.33ms                    -               -         -         -         -         -           -           -           -                -         -         -  cudaHostRegister
+574.64ms  754.54us                    -               -         -         -         -         -           -           -           -                -         -         -  cudaMalloc
+575.40ms  760.04us                    -               -         -         -         -         -           -           -           -                -         -         -  cudaMalloc
+576.16ms  464.63us                    -               -         -         -         -         -           -           -           -                -         -         -  cudaMalloc
+576.62ms  21.891ms                    -               -         -         -         -         -           -           -           -                -         -         -  cudaMemcpy
+576.66ms  21.839ms                    -               -         -         -         -  256.00MB  11.447GB/s      Pinned      Device  Tesla V100-PCIE         1         7  [CUDA memcpy HtoD]
+598.52ms  21.863ms                    -               -         -         -         -         -           -           -           -                -         -         -  cudaMemcpy
+598.54ms  21.835ms                    -               -         -         -         -  256.00MB  11.450GB/s      Pinned      Device  Tesla V100-PCIE         1         7  [CUDA memcpy HtoD]
+620.41ms  61.686us                    -               -         -         -         -         -           -           -           -                -         -         -  cudaLaunchKernel (k_randsum(int, unsigned int*, unsigned int*, unsigned int*) [115])
+620.47ms  998.58us         (262144 1 1)       (256 1 1)        16        0B        0B         -           -           -           -  Tesla V100-PCIE         1         7  k_randsum(int, unsigned int*, unsigned int*, unsigned int*) [115]
+620.47ms  21.416ms                    -               -         -         -         -         -           -           -           -                -         -         -  cudaMemcpy
+621.47ms  20.405ms                    -               -         -         -         -  256.00MB  12.252GB/s      Device      Pinned  Tesla V100-PCIE         1         7  [CUDA memcpy DtoH]
+641.89ms  490.73us                    -               -         -         -         -         -           -           -           -                -         -         -  cudaFree
+642.39ms  405.15us                    -               -         -         -         -         -           -           -           -                -         -         -  cudaFree
+642.79ms  431.40us                    -               -         -         -         -         -           -           -           -                -         -         -  cudaFree
+
+Regs: Number of registers used per CUDA thread. This number includes registers used internally by the CUDA driver and/or tools and can be more than what the compiler shows.
+SSMem: Static shared memory allocated per CUDA block.
+DSMem: Dynamic shared memory allocated per CUDA block.
+SrcMemType: The type of source memory accessed by memory operation/copy
+DstMemType: The type of destination memory accessed by memory operation/copy
+
+======== CPU profiling result (top down):
+Time(%)      Time  Name
+ 52.49%  4.34133s  __clone
+ 52.49%  4.34133s  | start_thread
+ 26.81%  2.21707s  |   ???
+ 26.81%  2.21707s  |   | ???
+ 26.81%  2.21707s  |   |   ???
+ 14.46%  1.19619s  |   |     __new_sem_wait_slow
+ 14.46%  1.19619s  |   |     | do_futex_wait
+ 12.34%  1.02088s  |   |     __new_sem_wait_slow.constprop.0
+ 12.34%  1.02088s  |   |       do_futex_wait.constprop.1
+ 25.69%  2.12426s  |   ???
+ 47.51%  3.92885s  main
+ 47.51%  3.92885s    runexp
+ 27.68%  2.28925s      rand
+ 27.18%    2.248s      | random
+  3.49%  288.73ms      |   random_r
+ 11.72%  969.32ms      randsum
+ 10.85%  897.14ms      | cudaHostRegister
+ 10.85%  897.14ms      | | ???
+ 10.35%  855.89ms      | |   ???
+ 10.35%  855.89ms      | |   | ???
+  6.73%  556.84ms      | |   |   __pthread_once_slow
+  6.73%  556.84ms      | |   |   | ???
+  6.73%  556.84ms      | |   |   |   ???
+  6.73%  556.84ms      | |   |   |     cuInit
+  3.62%  299.05ms      | |   |   ???
+  3.62%  299.05ms      | |   |     ???
+  3.62%  299.05ms      | |   |       ???
+  3.62%  299.05ms      | |   |         cuDevicePrimaryCtxRetain
+  0.50%  41.248ms      | |   cuMemHostRegister_v2
+  0.75%  61.872ms      | cudaMemcpy
+  0.75%  61.872ms      | | ???
+  0.75%  61.872ms      | |   ???
+  0.50%  41.248ms      | |     cuMemcpyHtoD_v2
+  0.25%  20.624ms      | |     cuMemcpyDtoH_v2
+  0.12%  10.312ms      | cudaError cudaMalloc<unsigned int>(unsigned int**, unsigned long)
+  0.12%  10.312ms      |   cudaMalloc
+  0.12%  10.312ms      |     ???
+  0.12%  10.312ms      |       ???
+  0.12%  10.312ms      |         cuMemAlloc_v2
+  0.50%  41.248ms      ???
+  0.25%  20.624ms      free
+  0.25%  20.624ms        munmap
+
+======== Data collected at 100Hz frequency

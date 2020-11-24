@@ -1,0 +1,69 @@
+======== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   67.11%  43.676ms         2  21.838ms  21.834ms  21.843ms  [CUDA memcpy HtoD]
+                   31.35%  20.406ms         1  20.406ms  20.406ms  20.406ms  [CUDA memcpy DtoH]
+                    1.54%  999.35us         1  999.35us  999.35us  999.35us  k_randsum(int, unsigned int const *, unsigned int const *, unsigned int*)
+      API calls:   86.61%  624.95ms         3  208.32ms  33.052ms  466.83ms  cudaHostRegister
+                    9.03%  65.183ms         3  21.728ms  21.421ms  21.897ms  cudaMemcpy
+                    3.72%  26.876ms         3  8.9587ms  8.0535ms  9.4668ms  cudaHostUnregister
+                    0.23%  1.6715ms         3  557.15us  449.91us  751.31us  cudaMalloc
+                    0.18%  1.2948ms         3  431.61us  408.52us  477.01us  cudaFree
+                    0.18%  1.2898ms         1  1.2898ms  1.2898ms  1.2898ms  cuDeviceTotalMem
+                    0.03%  234.84us        97  2.4210us     151ns  89.436us  cuDeviceGetAttribute
+                    0.01%  59.708us         1  59.708us  59.708us  59.708us  cudaLaunchKernel
+                    0.00%  27.328us         1  27.328us  27.328us  27.328us  cuDeviceGetName
+                    0.00%  6.6730us         1  6.6730us  6.6730us  6.6730us  cuDeviceGetPCIBusId
+                    0.00%  2.6280us         3     876ns     296ns  1.2530us  cuDeviceGetCount
+                    0.00%  1.4800us         2     740ns     267ns  1.2130us  cuDeviceGet
+                    0.00%     345ns         1     345ns     345ns     345ns  cuDeviceGetUuid
+
+======== CPU profiling result (top down):
+Time(%)      Time  Name
+ 55.08%  5.08755s  __clone
+ 55.08%  5.08755s  | start_thread
+ 27.93%   2.5799s  |   ???
+ 27.93%   2.5799s  |   | ???
+ 27.93%   2.5799s  |   |   ???
+ 14.75%  1.36219s  |   |     __new_sem_wait_slow
+ 14.75%  1.36219s  |   |     | do_futex_wait
+ 13.18%  1.21771s  |   |     __new_sem_wait_slow.constprop.0
+ 13.18%  1.21771s  |   |       do_futex_wait.constprop.1
+ 27.15%  2.50766s  |   ???
+ 44.80%  4.13815s  main
+ 44.80%  4.13815s  | runexp
+ 24.47%  2.25999s  |   rand
+ 23.69%  2.18775s  |   | random
+  2.46%  227.03ms  |   |   random_r
+ 12.18%  1.12483s  |   randsum
+ 11.17%  1.03196s  |   | cudaHostRegister
+ 11.17%  1.03196s  |   | | ???
+ 10.61%  980.36ms  |   | |   ???
+ 10.61%  980.36ms  |   | |   | ???
+  6.03%  557.26ms  |   | |   |   __pthread_once_slow
+  6.03%  557.26ms  |   | |   |   | ???
+  6.03%  557.26ms  |   | |   |   |   ???
+  6.03%  557.26ms  |   | |   |   |     cuInit
+  4.58%   423.1ms  |   | |   |   ???
+  4.58%   423.1ms  |   | |   |     ???
+  4.58%   423.1ms  |   | |   |       ???
+  3.80%  350.87ms  |   | |   |         cuDevicePrimaryCtxRetain
+  0.78%  72.237ms  |   | |   |         ???
+  0.56%  51.598ms  |   | |   cuMemHostRegister_v2
+  0.67%  61.918ms  |   | cudaMemcpy
+  0.67%  61.918ms  |   | | ???
+  0.67%  61.918ms  |   | |   ???
+  0.45%  41.278ms  |   | |     cuMemcpyHtoD_v2
+  0.22%  20.639ms  |   | |     cuMemcpyDtoH_v2
+  0.34%  30.959ms  |   | cudaHostUnregister
+  0.34%  30.959ms  |   |   ???
+  0.34%  30.959ms  |   |     cuMemHostUnregister
+  0.67%  61.918ms  |   ???
+  0.34%  30.959ms  |   free
+  0.34%  30.959ms  |     munmap
+  0.11%   10.32ms  ???
+  0.11%   10.32ms    ???
+  0.11%   10.32ms      ???
+  0.11%   10.32ms        ???
+  0.11%   10.32ms          ???
+
+======== Data collected at 100Hz frequency

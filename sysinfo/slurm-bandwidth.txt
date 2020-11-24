@@ -1,0 +1,24 @@
+[CUDA Bandwidth Test] - Starting...
+Running on...
+
+ Device 0: Tesla V100-PCIE-32GB
+ Quick Mode
+
+ Host to Device Bandwidth, 1 Device(s)
+ PINNED Memory Transfers
+   Transfer Size (Bytes)	Bandwidth(GB/s)
+   32000000			12.3
+
+ Device to Host Bandwidth, 1 Device(s)
+ PINNED Memory Transfers
+   Transfer Size (Bytes)	Bandwidth(GB/s)
+   32000000			13.2
+
+ Device to Device Bandwidth, 1 Device(s)
+ PINNED Memory Transfers
+   Transfer Size (Bytes)	Bandwidth(GB/s)
+   32000000			729.3
+
+Result = PASS
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.

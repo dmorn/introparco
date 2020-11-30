@@ -1,0 +1,49 @@
+======== Profiling result:
+   Start  Duration            Grid Size      Block Size     Regs*    SSMem*    DSMem*      Size  Throughput  SrcMemType  DstMemType           Device   Context    Stream  Name
+     0ns  88.767us                    -               -         -         -         -  1.0000MB  11.001GB/s      Pinned      Device  Tesla V100-PCIE         1         7  [CUDA memcpy HtoD]
+112.80us  88.031us                    -               -         -         -         -  1.0000MB  11.093GB/s      Pinned      Device  Tesla V100-PCIE         1         7  [CUDA memcpy HtoD]
+348.70us  4.0000us           (1024 1 1)       (256 1 1)        16        0B        0B         -           -           -           -  Tesla V100-PCIE         1         7  k_randsum(int, unsigned int*, unsigned int*, unsigned int*) [115]
+367.74us  80.639us                    -               -         -         -         -  1.0000MB  12.110GB/s      Device      Pinned  Tesla V100-PCIE         1         7  [CUDA memcpy DtoH]
+
+Regs: Number of registers used per CUDA thread. This number includes registers used internally by the CUDA driver and/or tools and can be more than what the compiler shows.
+SSMem: Static shared memory allocated per CUDA block.
+DSMem: Dynamic shared memory allocated per CUDA block.
+SrcMemType: The type of source memory accessed by memory operation/copy
+DstMemType: The type of destination memory accessed by memory operation/copy
+
+======== CPU profiling result (top down):
+Time(%)      Time  Name
+ 74.77%  2.55223s  __clone
+ 74.77%  2.55223s  | start_thread
+ 38.44%  1.31199s  |   ???
+ 38.44%  1.31199s  |   | ???
+ 38.44%  1.31199s  |   |   ???
+ 21.32%  727.74ms  |   |     __new_sem_wait_slow
+ 21.32%  727.74ms  |   |     | do_futex_wait
+ 17.12%  584.25ms  |   |     __new_sem_wait_slow.constprop.0
+ 17.12%  584.25ms  |   |       do_futex_wait.constprop.1
+ 36.34%  1.24024s  |   ???
+ 25.23%  860.99ms  main
+ 25.23%  860.99ms    runexp
+ 24.62%  840.49ms      randsum
+ 24.32%  830.24ms      | cudaHostRegister
+ 24.32%  830.24ms      | | ???
+ 24.32%  830.24ms      | |   ???
+ 24.32%  830.24ms      | |     ???
+ 14.11%  481.75ms      | |       __pthread_once_slow
+ 14.11%  481.75ms      | |       | ???
+ 14.11%  481.75ms      | |       |   ???
+ 14.11%  481.75ms      | |       |     cuInit
+ 10.21%   348.5ms      | |       ???
+ 10.21%   348.5ms      | |         ???
+ 10.21%   348.5ms      | |           ???
+ 10.21%   348.5ms      | |             cuDevicePrimaryCtxRetain
+  0.30%   10.25ms      | cudaError cudaMalloc<unsigned int>(unsigned int**, unsigned long)
+  0.30%   10.25ms      |   cudaMalloc
+  0.30%   10.25ms      |     ???
+  0.30%   10.25ms      |       ???
+  0.30%   10.25ms      |         cuMemAlloc_v2
+  0.60%    20.5ms      rand
+  0.60%    20.5ms        random
+
+======== Data collected at 100Hz frequency

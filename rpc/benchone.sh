@@ -34,8 +34,11 @@ ssh -T $ADDR << EOF
 	module load cuda-10.2 gcc-6.5.0
 
 	mkdir -p $REPORTS
+	echo narray=$NARRAY > $REPORTS/setup.txt
+	echo exec=$EXEC >> $REPORTS/setup.txt
+
 	$SRUN nvprof -o $REPORT --cpu-profiling on $EXEC $NARRAY && \
-	nvprof -i $REPORT --cpu-profiling-mode top-down --print-gpu-trace 2> $REPORTS/report.txt
+	nvprof -i $REPORT --cpu-profiling-mode top-down --print-gpu-trace 2> $REPORTS/report.nvprof.txt
 EOF
 
 echo $REPORTS | pbcopy

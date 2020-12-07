@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "exp.h"
+#include "../fns.h"
 
 int
 usage(int code, char *progname) {
@@ -21,6 +21,6 @@ main(int argc, char *argv[]) {
 		perror(strcat("invalid input ",opt));
 		return usage(n, argv[0]);
 	}
-	return runexp(n);
+	return run(n);
 }
 

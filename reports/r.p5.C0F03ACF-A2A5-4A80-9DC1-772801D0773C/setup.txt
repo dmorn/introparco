@@ -1,0 +1,2 @@
+narray=67108864
+exec=./src/labs/archive-32a7135/bin/r.p5

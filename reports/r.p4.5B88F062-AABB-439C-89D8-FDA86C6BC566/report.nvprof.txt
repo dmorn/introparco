@@ -1,0 +1,48 @@
+======== Profiling result:
+   Start  Duration            Grid Size      Block Size     Regs*    SSMem*    DSMem*      Size  Throughput  SrcMemType  DstMemType           Device   Context    Stream  Name
+     0ns  89.023us                    -               -         -         -         -  1.0000MB  10.970GB/s      Pinned      Device  Tesla V100-PCIE         1         7  [CUDA memcpy HtoD]
+106.75us  88.319us                    -               -         -         -         -  1.0000MB  11.057GB/s      Pinned      Device  Tesla V100-PCIE         1         7  [CUDA memcpy HtoD]
+279.81us  3.6800us           (1024 1 1)       (256 1 1)        16        0B        0B         -           -           -           -  Tesla V100-PCIE         1         7  k_randsum(int, unsigned int*, unsigned int*, unsigned int*) [115]
+298.33us  80.544us                    -               -         -         -         -  1.0000MB  12.125GB/s      Device      Pinned  Tesla V100-PCIE         1         7  [CUDA memcpy DtoH]
+
+Regs: Number of registers used per CUDA thread. This number includes registers used internally by the CUDA driver and/or tools and can be more than what the compiler shows.
+SSMem: Static shared memory allocated per CUDA block.
+DSMem: Dynamic shared memory allocated per CUDA block.
+SrcMemType: The type of source memory accessed by memory operation/copy
+DstMemType: The type of destination memory accessed by memory operation/copy
+
+======== CPU profiling result (top down):
+Time(%)      Time  Name
+ 77.95%  3.38759s  __clone
+ 77.95%  3.38759s  | start_thread
+ 47.95%  2.08382s  |   ???
+ 47.95%  2.08382s  |   | ???
+ 47.95%  2.08382s  |   |   ???
+ 34.36%  1.49322s  |   |     __new_sem_wait_slow
+ 34.36%  1.49322s  |   |     | do_futex_wait
+ 13.59%   590.6ms  |   |     __new_sem_wait_slow.constprop.0
+ 13.59%   590.6ms  |   |       do_futex_wait.constprop.1
+ 30.00%  1.30378s  |   ???
+ 21.79%  947.19ms  main
+ 21.79%  947.19ms  | runexp
+ 21.28%   924.9ms  |   randsum
+ 21.28%   924.9ms  |   | cudaHostRegister
+ 21.28%   924.9ms  |   |   ???
+ 21.28%   924.9ms  |   |     ???
+ 21.28%   924.9ms  |   |       ???
+ 12.82%  557.17ms  |   |         __pthread_once_slow
+ 12.82%  557.17ms  |   |         | ???
+ 12.82%  557.17ms  |   |         |   ???
+ 12.82%  557.17ms  |   |         |     cuInit
+  8.46%  367.73ms  |   |         ???
+  8.46%  367.73ms  |   |           ???
+  8.46%  367.73ms  |   |             ???
+  8.46%  367.73ms  |   |               cuDevicePrimaryCtxRetain
+  0.26%  11.143ms  |   ???
+  0.26%  11.143ms  ???
+  0.26%  11.143ms    ???
+  0.26%  11.143ms      ???
+  0.26%  11.143ms        ???
+  0.26%  11.143ms          ???
+
+======== Data collected at 100Hz frequency

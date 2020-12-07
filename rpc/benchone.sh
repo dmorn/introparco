@@ -45,7 +45,7 @@ echo $REPORTS | pbcopy
 echo 🎟 : $TICKET
 echo download command:
 
-DL="scp -r $ADDR:./$REPORTS reports"
+DL="scp -r $ADDR:./$REPORTS/*.txt $REPORTS"
 echo $DL
 echo $DL | pbcopy
 echo copied!

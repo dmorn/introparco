@@ -1,0 +1,2 @@
+narray=262144
+exec=./src/labs/archive-32a7135/bin/r.p4

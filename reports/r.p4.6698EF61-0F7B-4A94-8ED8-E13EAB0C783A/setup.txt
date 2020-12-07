@@ -1,1 +1,2 @@
-narray=262144exec=./src/labs/archive-15e1c50/bin/r.p4
+narray=262144
+exec=./src/labs/archive-15e1c50/bin/r.p4

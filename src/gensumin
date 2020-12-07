@@ -1,0 +1,5 @@
+#!/bin/bash
+N=${N:-$(( 2 ** 18 ))}
+
+echo $N
+for i in $(seq 1 $N); do echo $RANDOM,$RANDOM; done

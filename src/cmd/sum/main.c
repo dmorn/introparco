@@ -17,7 +17,9 @@ usage(int code, char *progname) {
 int
 main(int argc, char *argv[]) {
 	uint n, fa, fb;
-	uint *a, *b, *c;
+	uint *a = NULL;
+	uint *b = NULL;
+	uint *c = NULL;
 	int err, i;
 	Msr m = {MuNA, "", 0, NULL};
 
@@ -28,9 +30,7 @@ main(int argc, char *argv[]) {
 	if(n < 0)
 		return usage(2, argv[0]);
 
-	a = hostalloc(sizeof(uint)*n);
-	b = hostalloc(sizeof(uint)*n);
-	c = hostalloc(sizeof(uint)*n);
+	sumalloc(n, &a, &b, &c);
 
 	for(i = 0; i < n; i++) {
 		if((err = scanf("%u,%u\n", &fa, &fb)) < 2) {

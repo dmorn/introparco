@@ -1,3 +1,7 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef unsigned int uint;
 
 enum Munit {
@@ -16,3 +20,6 @@ struct Msr {
 	Msr        *next; /* in list */
 };
 
+#ifdef __cplusplus
+}
+#endif

@@ -4,9 +4,11 @@
 #include "dat.h"
 #include "fns.h"
 
-void* 
-hostalloc(size_t s) {
-	return malloc(s);
+void
+sumalloc(int n, uint **a, uint **b, uint **c) {
+	*a = malloc(sizeof(uint)*n);
+	*b = malloc(sizeof(uint)*n);
+	*c = malloc(sizeof(uint)*n);
 }
 
 void

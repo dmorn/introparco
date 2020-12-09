@@ -15,4 +15,5 @@ $(TMPSRC): $(SRC)
 clean:
 	rm -f $(TARG)
 	rm -rf $(TMPSRC)
+	make -C $(SRC) clean
 

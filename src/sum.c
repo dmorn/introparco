@@ -7,12 +7,12 @@ void
 sum(Msr *lp, int n, uint a[], uint b[], uint c[]) {
 	int i;
 	double tic;
-	Msr m = {MuNS, "sum", 0, NULL};
+	Msr *m;
 
 	tic = now();
 	for(i = 0; i < n; i++) {
 		c[i] = a[i] + b[i];
 	}
-	m.val = (uint)(now()-tic);
-	addmsr(lp, &m);
+	m = msrnew(MuNS, "sum", (uint)(now()-tic));
+	msradd(lp, m);
 }

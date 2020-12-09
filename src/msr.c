@@ -41,17 +41,41 @@ msrprint(Msr *lp, void *arg) {
 	fprintf(fout, "m,%s,%s,%u\n", u, lp->name, lp->val);
 }
 
-void
-msrprintall(FILE *fout, Msr *lp) {
-	msrapply(lp, &msrprint, fout);
+Msr*
+msrnew(enum Munit u, char *n, uint v) {
+	Msr *p = malloc(sizeof(Msr));
+	p->unit = u;
+	p->name = n;
+	p->val = v;
+	p->next = NULL;
+	return p;
 }
 
 void
-addmsr(Msr *lp, Msr *m) {
+msrprintall(FILE *fout, Msr *lp) {
+	msrapply(lp, msrprint, fout);
+}
+
+void
+msradd(Msr *lp, Msr *m) {
+	for(; lp->next != NULL; lp = lp->next)
+		;
+
+	/* An optimization: if the first item is
+	 * not initialized, replace it */
 	if(lp->unit == MuNA) {
 		*lp = *m;
 	} else {
 		lp->next = m;
+	}
+}
+
+void
+msrfree(Msr *lp) {
+	Msr *next;
+	for(; lp != NULL; lp = next) {
+		next = lp->next;
+		free(lp);
 	}
 }
 

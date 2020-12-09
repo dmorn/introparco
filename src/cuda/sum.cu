@@ -18,6 +18,7 @@ sum(Msr *lp, int n, uint a[], uint b[], uint c[]) {
 	size_t s;
 	int thd, blk;
 	double tic;
+	Msr *m1, *m2, *m3, *m4;
 	Msr m = {MuNS, "sum", 0, NULL};
 	Msr m1 = {MuNS, "cudaMemcpyHtD", 0, NULL};
 	Msr m2 = {MuNS, "cudaMalloc", 0, NULL};
@@ -28,27 +29,27 @@ sum(Msr *lp, int n, uint a[], uint b[], uint c[]) {
 	cudaMalloc(&da, s);
 	cudaMalloc(&db, s);
 	cudaMalloc(&dc, s);
-	m2.val = (uint)(now()-tic);
-	addmsr(lp, &m2);
+	m1 = msrnew(MuNS, "cudaMalloc", (uint)(now()-tic));
+	msradd(lp, m1);
 
 	tic = now();
 	cudaMemcpy(da, a, s, cudaMemcpyHostToDevice);
 	cudaMemcpy(db, b, s, cudaMemcpyHostToDevice);
-	m1.val = (uint)(now()-tic);
-	addmsr(lp, &m1);
+	m2 = msrnew(MuNS, "cudaMemcpyHtoD", (uint)(now()-tic));
+	msradd(lp, m2);
 
 	thd = 32;
 	blk = (n+thd-1)/thd;
 
 	tic = now();
 	k_sum<<<blk, thd>>>(n, da, db, dc);
-	m.val = (uint)(now()-tic);
-	addmsr(lp, &m);
+	m3 = msrnew(MuNS, "sum", (uint)(now()-tic));
+	msradd(lp, m3);
 
 	tic = now();
 	cudaMemcpy(c, dc, s, cudaMemcpyDeviceToHost);
-	m3.val = (uint)(now()-tic);
-	addmsr(lp, &m3);
+	m4 = msrnew(MuNS, "cudaMemcpyDtoH", (uint)(now()-tic));
+	msradd(lp, m4);
 
 	cudaFree(da);
 	cudaFree(db);

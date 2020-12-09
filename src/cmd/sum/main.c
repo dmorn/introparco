@@ -21,7 +21,7 @@ main(int argc, char *argv[]) {
 	uint *b = NULL;
 	uint *c = NULL;
 	int err, i;
-	Msr m = {MuNA, "", 0, NULL};
+	Msr *lp;
 
 	if((err = scanf("%u\n", &n)) < 1) {
 		fprintf(stderr, "failed scanning number of items\n");
@@ -39,18 +39,19 @@ main(int argc, char *argv[]) {
 		a[i] = fa;
 		b[i] = fb;
 	}
-
-	sum(&m, n, a, b, c);
+	lp = msrnew(MuNA, "", 0);
+	sum(lp, n, a, b, c);
 
 	printf("%u\n", n);
 	for(i = 0; i < n; i++)
 		printf("%u,%u,%u\n", a[i], b[i], c[i]);
 
-	msrprintall(stderr, &m);
+	msrprintall(stderr, lp);
 
 	fflush(stdout);
 	fflush(stderr);
 
+	msrfree(lp);
 	hostfree(a);
 	hostfree(b);
 	hostfree(c);

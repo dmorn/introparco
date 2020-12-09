@@ -4,16 +4,31 @@
 #include "dat.h"
 #include "fns.h"
 
+double
+now(void) {
+	struct timespec t;
+	if (!timespec_get(&t, TIME_UTC))
+		exit(5);
+	return t.tv_sec*1e9 + t.tv_nsec;
+}
+
 void
-printmsr(FILE *fout, Msr *m) {
+msrapply(Msr *lp, void(*fn)(Msr*, void*), void *arg) {
+	for(; lp != NULL; lp = lp->next)
+		(*fn)(lp, arg);
+}
+
+void
+msrprint(Msr *lp, void *arg) {
+	FILE *fout;
 	char *u;
 
-	if(m == NULL) {
-		fflush(fout);
+	if(lp == NULL) {
 		return;
 	}
+	fout = (FILE*)arg;
 
-	switch(m->unit) {
+	switch(lp->unit) {
 	case MuBPS:
 		u = "bytes/sec";
 		break;
@@ -21,20 +36,14 @@ printmsr(FILE *fout, Msr *m) {
 		u = "ns";
 		break;
 	default:
-		fprintf(fout, "unrecognised measurement unit %d\n", m->unit);
-		fflush(fout);
-		exit(2);
+		return;
 	}
-	fprintf(fout, "m,%s,%s,%u\n", u, m->name, m->val);
-	printmsr(fout, m->next);
+	fprintf(fout, "m,%s,%s,%u\n", u, lp->name, lp->val);
 }
 
-double
-now(void) {
-	struct timespec t;
-	if (!timespec_get(&t, TIME_UTC))
-		exit(5);
-	return t.tv_sec*1e9 + t.tv_nsec;
+void
+msrprintall(FILE *fout, Msr *lp) {
+	msrapply(lp, &msrprint, fout);
 }
 
 void

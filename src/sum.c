@@ -14,6 +14,5 @@ sum(Msr *lp, int n, uint a[], uint b[], uint c[]) {
 		c[i] = a[i] + b[i];
 	}
 	m.val = (uint)(now()-tic);
-
 	addmsr(lp, &m);
 }

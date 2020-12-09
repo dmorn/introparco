@@ -46,7 +46,7 @@ main(int argc, char *argv[]) {
 	for(i = 0; i < n; i++)
 		printf("%u,%u,%u\n", a[i], b[i], c[i]);
 
-	printmsr(stderr, &m);
+	msrprintall(stderr, &m);
 
 	fflush(stdout);
 	fflush(stderr);

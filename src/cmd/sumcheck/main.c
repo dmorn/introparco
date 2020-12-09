@@ -33,6 +33,6 @@ main(int argc, char *argv[]) {
 		}
 	}
 
-	printf("👍\n");
+	printf("%u 👍\n", n);
 	return 0;
 }

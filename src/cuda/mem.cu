@@ -6,7 +6,7 @@
 #include "../fns.h"
 
 void
-sumalloc(int n, uint **a, uint **b, uint **c) {
+allocsum(int n, uint **a, uint **b, uint **c) {
 	size_t s = sizeof(uint)*n;
 	/* notice we're not checking for errors */
 	cudaHostAlloc(a, s, cudaHostAllocWriteCombined);
@@ -15,7 +15,7 @@ sumalloc(int n, uint **a, uint **b, uint **c) {
 }
 
 void
-hostfree(void *ptr) {
+hfree(void *ptr) {
 	cudaFreeHost(ptr);
 }
 

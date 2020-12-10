@@ -13,6 +13,6 @@ sum(Msr *lp, int n, uint a[], uint b[], uint c[]) {
 	for(i = 0; i < n; i++) {
 		c[i] = a[i] + b[i];
 	}
-	m = msrnew(MuNS, "sum", (uint)(now()-tic));
-	msradd(lp, m);
+	m = newmsr(UnitNS, "sum", (float)(now()-tic));
+	addmsr(lp, m);
 }

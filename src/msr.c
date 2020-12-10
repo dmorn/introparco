@@ -19,7 +19,7 @@ msrapply(Msr *lp, void(*fn)(Msr*, void*), void *arg) {
 }
 
 void
-msrprint(Msr *lp, void *arg) {
+printmsr(Msr *lp, void *arg) {
 	FILE *fout;
 	char *u;
 
@@ -29,20 +29,23 @@ msrprint(Msr *lp, void *arg) {
 	fout = (FILE*)arg;
 
 	switch(lp->unit) {
-	case MuBPS:
+	case UnitBS:
 		u = "bytes/sec";
 		break;
-	case MuNS:
+	case UnitNS:
 		u = "ns";
+		break;
+	case UnitMS:
+		u = "ms";
 		break;
 	default:
 		return;
 	}
-	fprintf(fout, "m,%s,%s,%u\n", u, lp->name, lp->val);
+	fprintf(fout, "m,%s,%s,%.3f\n", u, lp->name, lp->val);
 }
 
 Msr*
-msrnew(enum Munit u, char *n, uint v) {
+newmsr(enum Unit u, char *n, float v) {
 	Msr *p = malloc(sizeof(Msr));
 	p->unit = u;
 	p->name = n;
@@ -51,19 +54,24 @@ msrnew(enum Munit u, char *n, uint v) {
 	return p;
 }
 
-void
-msrprintall(FILE *fout, Msr *lp) {
-	msrapply(lp, msrprint, fout);
+Msr*
+msrzero(void) {
+	return newmsr(UnitNA, "", 0);
 }
 
 void
-msradd(Msr *lp, Msr *m) {
+printallmsr(FILE *fout, Msr *lp) {
+	msrapply(lp, printmsr, fout);
+}
+
+void
+addmsr(Msr *lp, Msr *m) {
 	for(; lp->next != NULL; lp = lp->next)
 		;
 
 	/* An optimization: if the first item is
 	 * not initialized, replace it */
-	if(lp->unit == MuNA) {
+	if(lp->unit == UnitNA) {
 		*lp = *m;
 	} else {
 		lp->next = m;
@@ -71,11 +79,10 @@ msradd(Msr *lp, Msr *m) {
 }
 
 void
-msrfree(Msr *lp) {
+freemsr(Msr *lp) {
 	Msr *next;
 	for(; lp != NULL; lp = next) {
 		next = lp->next;
 		free(lp);
 	}
 }
-

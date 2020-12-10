@@ -30,7 +30,7 @@ main(int argc, char *argv[]) {
 	if(n < 0)
 		return usage(2, argv[0]);
 
-	sumalloc(n, &a, &b, &c);
+	allocsum(n, &a, &b, &c);
 
 	for(i = 0; i < n; i++) {
 		if((err = scanf("%u,%u\n", &fa, &fb)) < 2) {
@@ -39,22 +39,22 @@ main(int argc, char *argv[]) {
 		a[i] = fa;
 		b[i] = fb;
 	}
-	lp = msrnew(MuNA, "", 0);
+	lp = msrzero();
 	sum(lp, n, a, b, c);
 
 	printf("%u\n", n);
 	for(i = 0; i < n; i++)
 		printf("%u,%u,%u\n", a[i], b[i], c[i]);
 
-	msrprintall(stderr, lp);
+	printallmsr(stderr, lp);
 
 	fflush(stdout);
 	fflush(stderr);
 
-	msrfree(lp);
-	hostfree(a);
-	hostfree(b);
-	hostfree(c);
+	freemsr(lp);
+	hfree(a);
+	hfree(b);
+	hfree(c);
 
 	return 0;
 }

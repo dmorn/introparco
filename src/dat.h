@@ -4,19 +4,20 @@ extern "C" {
 
 typedef unsigned int uint;
 
-enum Munit {
-	MuNA,  /* Not Available */
-	MuBPS, /* Bytes per Second */
-	MuNS   /* Nanoseconds */
+enum Unit {
+	UnitNA,  /* Not Available */
+	UnitMS,  /* Milliseconds */
+	UnitNS,  /* Nanoseconds */
+	UnitBS,  /* Bytes per Second */
 };
 
 typedef struct Msr Msr;
 
 /* A measurement */
 struct Msr {
-	enum Munit unit;
+	enum Unit unit;
 	char       *name;
-	uint       val;
+	float      val;
 	Msr        *next; /* in list */
 };
 

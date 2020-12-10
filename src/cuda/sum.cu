@@ -32,9 +32,9 @@ sum(Msr *lp, int n, uint a[], uint b[], uint c[]) {
 	cudaMemcpy(da, a, s, cudaMemcpyHostToDevice);
 	cudaMemcpy(db, b, s, cudaMemcpyHostToDevice);
 	cudaEventRecord(stop, 0);
-	cudaEventSyncronize(stop);
+	cudaEventSynchronize(stop);
 	cudaEventElapsedTime(&elaps, start, stop);
-	msradd(lp, msrnew(UnitMS, "cudaMemcpyHtD", elaps));
+	addmsr(lp, newmsr(UnitMS, "cudaMemcpyHtD", elaps));
 
 	thd = 32;
 	blk = (n+thd-1)/thd;
@@ -42,16 +42,16 @@ sum(Msr *lp, int n, uint a[], uint b[], uint c[]) {
 	cudaEventRecord(start, 0);
 	k_sum<<<blk, thd>>>(n, da, db, dc);
 	cudaEventRecord(stop, 0);
-	cudaEventSyncronize(stop);
+	cudaEventSynchronize(stop);
 	cudaEventElapsedTime(&elaps, start, stop);
-	msradd(lp, msrnew(UnitMS, "k_sum", elaps));
+	addmsr(lp, newmsr(UnitMS, "k_sum", elaps));
 
 	cudaEventRecord(start, 0);
 	cudaMemcpy(c, dc, s, cudaMemcpyDeviceToHost);
 	cudaEventRecord(stop, 0);
-	cudaEventSyncronize(stop);
+	cudaEventSynchronize(stop);
 	cudaEventElapsedTime(&elaps, start, stop);
-	msradd(lp, msrnew(UnitMS, "cudaMemcpyDtH", elaps));
+	addmsr(lp, newmsr(UnitMS, "cudaMemcpyDtH", elaps));
 
 	cudaFree(da);
 	cudaFree(db);

@@ -6,13 +6,12 @@
 void
 sum(Msr *lp, int n, uint a[], uint b[], uint c[]) {
 	int i;
-	double tic;
-	Msr *m;
+	double tic, toc;
 
 	tic = now();
 	for(i = 0; i < n; i++) {
 		c[i] = a[i] + b[i];
 	}
-	m = newmsr(UnitNS, "sum", (float)(now()-tic));
-	addmsr(lp, m);
+	toc = now();
+	addmsr(lp, newmsr(UnitMS, "sum", elapsedms(tic, toc)));
 }

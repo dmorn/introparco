@@ -12,6 +12,12 @@ now(void) {
 	return t.tv_sec*1e9 + t.tv_nsec;
 }
 
+float
+elapsedms(double tic, double toc) {
+	return (float)((toc-tic)/1e6);
+}
+
+
 void
 msrapply(Msr *lp, void(*fn)(Msr*, void*), void *arg) {
 	for(; lp != NULL; lp = lp->next)
@@ -41,7 +47,7 @@ printmsr(Msr *lp, void *arg) {
 	default:
 		return;
 	}
-	fprintf(fout, "m,%s,%s,%.3f\n", u, lp->name, lp->val);
+	fprintf(fout, "m,%s,%s,%.5f\n", u, lp->name, lp->val);
 }
 
 Msr*

@@ -1,3 +1,3 @@
-TARGS+=sum-cuda-v1
+TARGS+=sum-cuda sum-cudastream
 LDADD=-L$(CUDA_HOME)/lib64 -lcudart -lstdc++
 

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <cuda.h>
+#include "event.h"
 #include "../dat.h"
 #include "../fns.h"
 
@@ -17,43 +18,32 @@ sum(Msr *lp, int n, uint a[], uint b[], uint c[]) {
 	size_t s;
 	uint *da, *db, *dc;
 	int thd, blk;
-	cudaEvent_t start, stop;
-	float elaps;
+	Event *e;
 
-	cudaEventCreate(&start);
-	cudaEventCreate(&stop);
-
+	e = newevent();
 	s = n*sizeof(uint);
 	cudaMalloc(&da, s);
 	cudaMalloc(&db, s);
 	cudaMalloc(&dc, s);
 
-	cudaEventRecord(start, 0);
+	start(e, 0);
 	cudaMemcpy(da, a, s, cudaMemcpyHostToDevice);
 	cudaMemcpy(db, b, s, cudaMemcpyHostToDevice);
-	cudaEventRecord(stop, 0);
-	cudaEventSynchronize(stop);
-	cudaEventElapsedTime(&elaps, start, stop);
-	addmsr(lp, newmsr(UnitMS, "cudaMemcpyHtD", elaps));
+	addmsr(lp, newmsr(UnitMS, "cudaMemcpyHtD", stop(e, 0)));
 
 	thd = 32;
 	blk = (n+thd-1)/thd;
 
-	cudaEventRecord(start, 0);
+	start(e, 0);
 	k_sum<<<blk, thd>>>(n, da, db, dc);
-	cudaEventRecord(stop, 0);
-	cudaEventSynchronize(stop);
-	cudaEventElapsedTime(&elaps, start, stop);
-	addmsr(lp, newmsr(UnitMS, "k_sum", elaps));
+	addmsr(lp, newmsr(UnitMS, "k_sum", stop(e, 0)));
 
-	cudaEventRecord(start, 0);
+	start(e, 0);
 	cudaMemcpy(c, dc, s, cudaMemcpyDeviceToHost);
-	cudaEventRecord(stop, 0);
-	cudaEventSynchronize(stop);
-	cudaEventElapsedTime(&elaps, start, stop);
-	addmsr(lp, newmsr(UnitMS, "cudaMemcpyDtH", elaps));
+	addmsr(lp, newmsr(UnitMS, "cudaMemcpyDtH", stop(e, 0)));
 
 	cudaFree(da);
 	cudaFree(db);
 	cudaFree(dc);
+	freeevent(e);
 }

@@ -22,17 +22,23 @@ sum: cmd/sum/main.o libsum.a msr.o
 sumcheck: cmd/sumcheck/main.o
 	$(LD) $^ -o $@ $(LDFLAGS) $(LDADD)
 
+sum-cuda: cmd/sum/main.o cuda/libsum.a msr.o
+	$(LD) $^ -o $@ $(LDFLAGS) $(LDADD)
+
+sum-cudastream: cmd/sum/main.o cuda/libsumstream.a msr.o
+	$(LD) $^ -o $@ $(LDFLAGS) $(LDADD)
+
+%.o: %.c
+	$(CC) -c $(CFLAGS) -o $@ $<
+
 libsum.a: sum.o mem.o
 	$(AR) rs $@ $^
-
-sum-cuda-v1: cmd/sum/main.o cuda/libsum.a msr.o
-	$(LD) $^ -o $@ $(LDFLAGS) $(LDADD)
 
 cuda/libsum.a:
 	(cd $(@D); $(MAKE))
 
-%.o: %.c
-	$(CC) -c $(CFLAGS) -o $@ $<
+cuda/libsumstream.a: sum.o mem.o
+	(cd $(@D); $(MAKE))
 
 clean:
 	rm -f *.o *.a

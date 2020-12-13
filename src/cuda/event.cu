@@ -26,8 +26,8 @@ freeevent(Event *e) {
 
 Event*
 newevent(void) {
-	Event e;
-	e = malloc(sizeof(Event));
+	Event *e;
+	e = (Event*) malloc(sizeof(Event));
 	cudaEventCreate(&(e->tic));
 	cudaEventCreate(&(e->toc));
 	return e;

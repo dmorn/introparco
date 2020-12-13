@@ -2,4 +2,6 @@
 N=${N:-$(( 2 ** 18 ))}
 
 echo $N
-for i in $(seq 1 $N); do echo $RANDOM,$RANDOM; done
+for ((i=0; i<$N; i++)); do
+	echo $RANDOM,$RANDOM
+done

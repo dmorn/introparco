@@ -1,0 +1,9 @@
+TARGS+=sum-omp
+CFLAGS+=-fopenmp
+LDADD=-fopenmp
+
+sum-omp: cmd/sum/main.o omp/libsum.a msr.o
+	$(LD) $^ -o $@ $(LDFLAGS) $(LDADD)
+
+omp/libsum.a: omp/sum.o omp/mem.o
+	(cd $(@D); $(MAKE))

@@ -1,8 +1,7 @@
 NVCC=nvcc
 NVCCFLAGS=-c --default-stream per-thread
 
-LIBS=libsum.a libsumstream.a
-all: $(LIBS)
+all: libsum.a libsumstream.a
 
 libsum.a: sum.o mem.o event.o
 	$(AR) rs $@ $^

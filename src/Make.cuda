@@ -1,3 +1,14 @@
 TARGS+=sum-cuda sum-cudastream
 LDADD=-L$(CUDA_HOME)/lib64 -lcudart -lstdc++
 
+sum-cuda: cmd/sum/main.o cuda/libsum.a msr.o
+	$(LD) $^ -o $@ $(LDFLAGS) $(LDADD)
+
+sum-cudastream: cmd/sum/main.o cuda/libsumstream.a msr.o
+	$(LD) $^ -o $@ $(LDFLAGS) $(LDADD)
+
+cuda/libsum.a:
+	(cd $(@D); $(MAKE))
+
+cuda/libsumstream.a:
+	(cd $(@D); $(MAKE))

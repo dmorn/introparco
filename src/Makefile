@@ -6,11 +6,11 @@ export CFLAGS=-std=c11 -Wall -pedantic -O
 export LDFLAGS=
 export LDADD=
 
-CONF?=omp
-include Make.$(CONF)
-
 # Add default args. Others are included by CONF-driven Makefiles.
-TARGS+=sum sumcheck
+export TARGS=sum sumcheck
+
+CONF?=posix
+include Make.$(CONF)
 
 all: $(TARGS)
 
